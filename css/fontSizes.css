@@ -1,0 +1,34 @@
+html {
+    --font-header-h1-family: inherit;
+    --font-header-h1-size: 1.25rem;
+    --font-header-h1-weight: 600;
+
+
+    --font-header-h2-family: inherit;
+    --font-header-h2-size: 0.9rem;
+    --font-header-h2-weight: 600;
+
+    --font-bajada-family: inherit;
+    --font-bajada-size: 0.94rem;
+    --font-bajada-weight: normal;
+
+    --font-label-family: inherit;
+    --font-label-size: 0.73rem;
+    --font-label-weight: normal;
+    --font-label-color: var(--color-azul-oscuro);
+    --font-error-family: inherit;
+    --font-error-size: 0.63rem;
+    --font-error-weight: normal;
+    --font-error-color: var(--color-rojo);
+
+    --font-boton-family: inherit;
+    --font-boton-size: .84rem;
+    --font-boton-weight: 600;
+
+    --font-boton2-family: inherit;
+    --font-boton2-size: .78rem;
+    --font-boton2-weight: 600;
+
+
+
+}
