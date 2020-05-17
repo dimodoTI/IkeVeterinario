@@ -96,6 +96,11 @@ export const idiomas = {
             ingresar: "Ingresar",
             footerTitulo: "¿Necesitás ayuda? Estamos para lo que necesites.",
             footerLeyenda: "Solicitar asistencia"
+        },
+        agenda: {
+            titulo: "Agenda de ",
+            leyenda: "Consultá tus próximas consultas de la semana.",
+            tituloLista: "Tus próximas consultas"
         }
     }
 }

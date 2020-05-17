@@ -30,7 +30,9 @@ export class proximaConsulta extends connect(store)(LitElement) {
         return css `
         
             :host(){
-               width:100%;
+               
+               display:grid;
+               justify-self:center;
 
   
                 
@@ -38,8 +40,8 @@ export class proximaConsulta extends connect(store)(LitElement) {
 
             .contenedor{   
                 width: 88%;
-                display:flex;
-                flex-direction:row;
+                display:grid;
+                grid-auto-flow:column;
                 background-color: var(--color-azul-oscuro);
                 border-radius:.3rem;
                 padding:1rem;
@@ -70,7 +72,7 @@ export class proximaConsulta extends connect(store)(LitElement) {
     render() {
         return html `
             <div id="header" class="contenedor">
-                <div>
+                <div style="display:grid">
                     <label>${idiomas[this.idioma].misconsultas.consulta}</label>
                 </div>
                 <div class="ingresar">

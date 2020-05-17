@@ -109,7 +109,7 @@ export class pantallaMisconsultas extends connect(store, MODO_PANTALLA)(LitEleme
                     <div>${HISTORIAL}</div>
                     <div class="cajaTexto">Ver historial de consultas</div>
                 </div>
-                <div class="caja" style="margin-right:.84rem">
+                <div class="caja" style="margin-right:.84rem" @click="${this.irAgenda}">
                     <div>${AGENDA}</div>
                     <div class="cajaTexto">Ver próximas consultas</div>
                 </div>
@@ -122,6 +122,10 @@ export class pantallaMisconsultas extends connect(store, MODO_PANTALLA)(LitEleme
             
 
         `
+    }
+
+    irAgenda(e) {
+        store.dispatch(modoPantalla("agenda"))
     }
 
     stateChanged(state, name) {

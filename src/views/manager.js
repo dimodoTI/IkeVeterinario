@@ -51,6 +51,10 @@ import {
     pantallaMisconsultas
 } from "../views/formularios/misconsultas"
 
+import {
+    pantallaAgenda
+} from "../views/formularios/agenda"
+
 const QUEPANTALLA = "ui.timeStampPantalla";
 export class viewManager extends connect(store, QUEPANTALLA)(LitElement) {
     constructor() {
@@ -87,6 +91,7 @@ export class viewManager extends connect(store, QUEPANTALLA)(LitElement) {
         <pantalla-accesoplan id="accesoplan"></pantalla-accesoplan>
         <pantalla-vercobertura id="vercobertura"></pantalla-vercobertura>
         <pantalla-misconsulta id="misconsultas"></pantalla-misconsulta>
+        <pantalla-agenda id="agenda"></pantalla-agenda>
         `;
     }
 
@@ -103,6 +108,7 @@ export class viewManager extends connect(store, QUEPANTALLA)(LitElement) {
                 this.shadowRoot.querySelector("#accesoplan").hidden = state.ui.quePantalla != "accesoplan";
                 this.shadowRoot.querySelector("#vercobertura").hidden = state.ui.quePantalla != "vercobertura";
                 this.shadowRoot.querySelector("#misconsultas").hidden = state.ui.quePantalla != "misconsultas";
+                this.shadowRoot.querySelector("#agenda").hidden = state.ui.quePantalla != "agenda";
             }
         }
 
