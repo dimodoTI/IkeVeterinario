@@ -74,6 +74,56 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
                     Nombre: "Coqui"
                 },
                 motivo: "Renguea una pata"
+            },
+            {
+                fecha: "2020-05-25",
+                hora: "16:00",
+                idMascota: 3,
+                Mascotas: {
+                    Id: 3,
+                    Nombre: "Coqui"
+                },
+                motivo: "Renguea una pata"
+            },
+            {
+                fecha: "2020-05-25",
+                hora: "16:00",
+                idMascota: 3,
+                Mascotas: {
+                    Id: 3,
+                    Nombre: "Coqui"
+                },
+                motivo: "Renguea una pata"
+            },
+            {
+                fecha: "2020-05-25",
+                hora: "16:00",
+                idMascota: 3,
+                Mascotas: {
+                    Id: 3,
+                    Nombre: "Coqui"
+                },
+                motivo: "Renguea una pata"
+            },
+            {
+                fecha: "2020-05-25",
+                hora: "16:00",
+                idMascota: 3,
+                Mascotas: {
+                    Id: 3,
+                    Nombre: "Coqui"
+                },
+                motivo: "Renguea una pata"
+            },
+            {
+                fecha: "2020-05-25",
+                hora: "16:00",
+                idMascota: 3,
+                Mascotas: {
+                    Id: 3,
+                    Nombre: "Coqui"
+                },
+                motivo: "Renguea una pata"
             }
 
         ]
@@ -96,8 +146,10 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
             background-color:var(--color-gris-fondo);
             height: 100%;
             width: 100%;   
-            flex-direction:column
+            flex-direction:column;
+
         }
+
         :host([hidden]){
             display: none; 
         }
@@ -140,9 +192,12 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
         .contenedorLista{
             background-color:transparent;
             display:grid;
-            flex-direction:column;
+            grid-auto-flow:row;
+            height:55%;
             width:100%;
             padding-top:.84rem;
+            overflow-y:auto ;
+            
 
         }
 
@@ -154,6 +209,7 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
             text-justify:left;
             background-color:transparent;
             display:flex;
+            padding-bottom:.84rem;
            
         }
 
@@ -174,7 +230,7 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
             background-color:transparent;
             padding-right:.42rem;
             justify-items:center;
-            overflow-y:auto 
+           
             
 
         }
@@ -223,7 +279,7 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
                 <div class="tituloLista">
                     ${idiomas[this.idioma].agenda.tituloLista}
                 </div>
-                <div>
+                <div style="overflow-y:auto">
                    ${this.items.map((item)=> {return html `
                                 <div class="row" .item=${item} @click=${this.editar}>
                                     <div class="fecha">
