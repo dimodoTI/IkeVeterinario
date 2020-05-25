@@ -29,6 +29,12 @@ html {
     --font-boton2-size: .78rem;
     --font-boton2-weight: 600;
 
+    --font-pie-family: inherit;
+    --font-pie-size: .6rem;
+    --font-pie-weight: normal;
 
+    --font-pie-select-family: inherit;
+    --font-pie-select-size: .6rem;
+    --font-pie-select-weight: 600;
 
 }

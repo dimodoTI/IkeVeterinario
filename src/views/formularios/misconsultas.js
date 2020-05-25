@@ -20,9 +20,7 @@ import {
     inicioSesionComponente
 } from "../componentes/iniciosesioncomponente"
 
-import {
-    headerComponente
-} from "../componentes/header"
+
 
 import {
     proximaConsulta
@@ -37,6 +35,23 @@ import {
     footerComponente
 } from "../componentes/footer"
 
+import {
+    cabecera1
+} from "../css/cabecera1"
+
+import {
+    button
+} from "../css/button"
+
+import {
+    pieComponente
+} from "../componentes/pie"
+
+import {
+    proxima
+} from "../css/proxima"
+
+
 const MODO_PANTALLA = "ui.timeStampPantalla"
 export class pantallaMisconsultas extends connect(store, MODO_PANTALLA)(LitElement) {
     constructor() {
@@ -49,6 +64,9 @@ export class pantallaMisconsultas extends connect(store, MODO_PANTALLA)(LitEleme
 
     static get styles() {
         return css `
+        ${cabecera1}
+        ${button}
+        ${proxima}
         :host{
             display: flex;
             background-color:var(--color-gris-fondo);
@@ -67,6 +85,13 @@ export class pantallaMisconsultas extends connect(store, MODO_PANTALLA)(LitEleme
            background-color:transparent;
            justify-content:space-between;
            padding-bottom:5rem;
+        }
+
+        .cuerpo{
+            display:grid;
+            grid-auto-flow:row;
+            width:100%;
+            padding-top:.84rem;
         }
 
         .caja{
@@ -95,29 +120,78 @@ export class pantallaMisconsultas extends connect(store, MODO_PANTALLA)(LitEleme
             padding-bottom:.8rem;
             text-align:center
         }
+
+ 
+        .ayuda{
+            display:grid;
+            grid-auto-flow:row;
+            background-color:var(--color-gris-claro);
+            font-size:var(--font-header-h2-family);
+            font-weight:var(--font-header-h2-weight);
+            color:var(--color-azul-oscuro);
+            align-content:center;
+            width:100%;
+            padding-top:.84rem;
+            text-align:center;
+            grid-gap:.84rem
+
+        }
         `
     }
 
     render() {
         return html `
-            <div style="display:flex;flex-direction:column">
-            <header-componente titulo=${idiomas[this.idioma].misconsultas.titulo} leyenda="${idiomas[this.idioma].misconsultas.leyenda}" ></header-componente>
-            <proxima-consulta  style="padding:.84rem;justify-self:center" id="proxima"></proxima-consulta>
-            </div>
-            <div class="cajas">
-                <div class="caja">
-                    <div>${HISTORIAL}</div>
-                    <div class="cajaTexto">Ver historial de consultas</div>
+
+             <div id="header">
+                <div id="bar">
+                    <div id="lblTitulo">${idiomas[this.idioma].misconsultas.titulo}</div>
                 </div>
-                <div class="caja" style="margin-right:.84rem" @click="${this.irAgenda}">
-                    <div>${AGENDA}</div>
-                    <div class="cajaTexto">Ver próximas consultas</div>
+                <div id="lblLeyenda">${idiomas[this.idioma].misconsultas.leyenda}</div>
+            </div>       
+
+            <div class="proxima">
+                <div>
+                    ${idiomas[this.idioma].misconsultas.consulta}
+                </div>
+                <div style="text-align:right;text-decoration:underline;padding-right:.8rem">
+                    ${idiomas[this.idioma].misconsultas.ingresar}
                 </div>
             </div>
-            <footer-componente titulo="${idiomas[this.idioma].misconsultas.footerTitulo}" leyenda="${idiomas[this.idioma].misconsultas.footerLeyenda}"></footer-componente>
-            <div class="ayuda">
+
+
+            
+            <div class="cuerpo">
+                <div class="cajas">
+                    <div class="caja">
+                        <div>${HISTORIAL}</div>
+                        <div class="cajaTexto">Ver historial de consultas</div>
+                    </div>
+                    <div class="caja" style="margin-right:.84rem" @click="${this.irAgenda}">
+                        <div>${AGENDA}</div>
+                        <div class="cajaTexto">Ver próximas consultas</div>
+                    </div>
+                </div>
+
+                <div class="ayuda">
+                    <div>
+                        <div>
+                        ${idiomas[this.idioma].misconsultas.footerTitulo1}
+                        </div>
+                        <div>
+                        ${idiomas[this.idioma].misconsultas.footerTitulo2}
+                        </div>
+                    </div>
+
+                    <div style="padding-left:.84rem;padding-right: .84rem;padding-bottom: .84rem;">
+                        <button style="width: 100%;padding:.84rem;" id="asistencia" btn1 >${idiomas[this.idioma].misconsultas.footerLeyenda}</button>
+                    </div>
+                </div>
 
             </div>
+            <pie-componente  id="footer" opcion="uno"></pie-componente>
+
+            
+
 
             
 

@@ -11,14 +11,20 @@ import {
 } from "@brunomon/helpers";
 import {
     modoPantalla,
-    dispararTimer,
     cancelarTimer
 } from "../../redux/actions/ui";
+import {
+    idiomas
+} from "../../redux/datos/idiomas"
+import {
+    inicioSesionComponente
+} from "../componentes/iniciosesioncomponente"
 const MODO_PANTALLA = "ui.timeStampPantalla"
-export class pantallaSplash extends connect(store, MODO_PANTALLA)(LitElement) {
+export class pantallaInicioSesion extends connect(store, MODO_PANTALLA)(LitElement) {
     constructor() {
         super();
-        this.hidden = false
+        this.hidden = true
+        this.idioma = "ES"
     }
 
     static get styles() {
@@ -38,22 +44,20 @@ export class pantallaSplash extends connect(store, MODO_PANTALLA)(LitElement) {
     }
     render() {
         return html `
-        <div id="fondo" @click="${this.pasar}">
-            <splash-screen></splash-screen>
-         </div>
-        `
+            <iniciosesion-componente label="${idiomas[this.idioma].iniciosession.datos}"
+            .clickBtn1=${function () {this.adelante()}}
+            .clickBtn2=${function () {store.dispatch(modoPantalla("recuperaclave"))}}
+            .clickBtn3=${function () {store.dispatch(modoPantalla("recuperaclave"))}}
+            > </iniciosesion-componente>
 
+        `
     }
 
     stateChanged(state, name) {
-        if (name == MODO_PANTALLA && state.ui.quePantalla == "splash") {
+        if (name == MODO_PANTALLA && state.ui.quePantalla == "iniciosesion") {
             store.dispatch(cancelarTimer())
-            store.dispatch(dispararTimer(3, "bienvenidos", "splash"))
-        }
-    }
 
-    pasar(e) {
-        store.dispatch(modoPantalla("bienvenidos"))
+        }
     }
 
     static get properties() {
@@ -66,4 +70,4 @@ export class pantallaSplash extends connect(store, MODO_PANTALLA)(LitElement) {
     }
 
 }
-window.customElements.define("pantalla-splash", pantallaSplash);
+window.customElements.define("pantalla-iniciosesion", pantallaInicioSesion);

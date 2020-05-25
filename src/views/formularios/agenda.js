@@ -24,9 +24,7 @@ import {
     headerComponente
 } from "../componentes/header"
 
-import {
-    proximaConsulta
-} from "../componentes/proximaconsulta"
+
 
 import {
     AGENDA,
@@ -34,8 +32,17 @@ import {
 } from "../../../assets/icons/icons"
 
 import {
-    footerComponente
-} from "../componentes/footer"
+    cabecera1
+} from "../css/cabecera1"
+
+import {
+    pieComponente
+} from "../componentes/pie"
+
+import {
+    proxima
+} from "../css/proxima"
+
 
 const MODO_PANTALLA = "ui.timeStampPantalla"
 export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
@@ -45,6 +52,23 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
         this.idioma = "ES"
         this.titulo = idiomas[this.idioma].misconsultas.titulo
         this.leyenda = idiomas[this.idioma].misconsultas.leyenda
+
+        this.items = [{
+                fecha: "20200524",
+                atenciones: [{
+                    hora: "16.00",
+
+
+                }]
+
+            },
+            {
+                fecha: "202005260",
+                atenciones: []
+            }
+
+        ]
+
         this.items = [{
                 fecha: "2020-05-24",
                 hora: "16:00",
@@ -141,64 +165,33 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
 
     static get styles() {
         return css `
+        ${cabecera1}
+        ${proxima}
+
         :host{
-            display: flex;
+            display: grid;
             background-color:var(--color-gris-fondo);
             height: 100%;
             width: 100%;   
-            flex-direction:column;
-
+            padding:0;
+            margin:0;
+            grid-template-rows: 19% 60% 12%;
         }
 
         :host([hidden]){
             display: none; 
         }
 
-        .cajas{
-           display:flex;
-           flex-direction:row;
-           align-content:center;
-           background-color:transparent;
-           justify-content:space-between;
-           padding-bottom:5rem;
+        .cuerpo{           
+            border: 1px solid red;
         }
 
-        .caja{
-            display:flex;
-            flex-direction:column;
-            align-content:center;
-            background-color:var(--color-celeste);
-            border-radius:.2rem;
-            text-align:center;
-            margin-left:.84rem;
-            margin-right:0rem;
-        }
-
-        div svg {
-            height:2.94rem;
-            width:3.56rem;
-            padding-top:1rem         
-        }
-
-        .cajaTexto{
-            font-size:.84rem;
-            color:#fff;
-            padding-right:1rem;
-            padding-top:.8rem;
-            padding-left:1rem;
-            padding-bottom:.8rem;
-            text-align:center
-        }
         .contenedorLista{
             background-color:transparent;
             display:grid;
-            grid-auto-flow:row;
-            height:55%;
-            width:100%;
+            grid-auto-flow:row;            
             padding-top:.84rem;
             overflow-y:auto ;
-            
-
         }
 
         .tituloLista{
@@ -230,9 +223,6 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
             background-color:transparent;
             padding-right:.42rem;
             justify-items:center;
-           
-            
-
         }
 
         .row .nroDia{
@@ -267,42 +257,52 @@ export class pantallaAgenda extends connect(store, MODO_PANTALLA)(LitElement) {
 
     render() {
         return html `
-            <div >
-                <header-componente titulo=${idiomas[this.idioma].agenda.titulo} leyenda="${idiomas[this.idioma].agenda.leyenda}" ></header-componente>
-                
-            </div>
-            <div style="padding-top:1rem">
-                <proxima-consulta style="display:grid" id="proxima"></proxima-consulta>
-           </div>
 
-           <div class="contenedorLista">
-                <div class="tituloLista">
-                    ${idiomas[this.idioma].agenda.tituloLista}
+            <div id="header">
+                <div id="bar">
+                    <div id="lblTitulo">${idiomas[this.idioma].agenda.titulo}</div>
                 </div>
-                <div style="overflow-y:auto">
-                   ${this.items.map((item)=> {return html `
+                <div id="lblLeyenda">${idiomas[this.idioma].agenda.leyenda}</div>
+            </div>       
+
+            <div id="cuerpo" style="padding-top:.84rem">
+                <div class="proxima">
+                    <div>
+                        ${idiomas[this.idioma].misconsultas.consulta}
+                    </div>
+                    <div style="text-align:right;text-decoration:underline;padding-right:.8rem">
+                        ${idiomas[this.idioma].misconsultas.ingresar}
+                    </div>
+                </div>
+
+
+                <div class="contenedorLista">
+                    <div class="tituloLista">
+                        ${idiomas[this.idioma].agenda.tituloLista}
+                    </div>
+                    <div style="overflow-y:auto">
+                        ${this.items.map((item)=> {return html `
                                 <div class="row" .item=${item} @click=${this.editar}>
                                     <div class="fecha">
-                                        <div class="nroDia">${this.nroDia(item.fecha) }</div>
+                                        <div class="nroDia">${this.nroDia(item.fecha)}</div>
                                         <div class="dow">${this.dow(item.fecha)}</div>
                                     </div>
-                                <div class="agenda">
-                                    <div style="align-self:self-end">${item.hora+ " hs."}</div>
-                                    <div class="paciente">
-                                        <div style="padding-right:.7rem">${item.Mascotas.Nombre}</div>
-                                        <div>${" - " + item.motivo}</div>
-                                    </div>
-                                </div>
-                            </div>                
-                `})}
-                </div>
-           </div>
-            
-            
-          
-           
 
-            
+                                    <div class="agenda">
+                                        <div>${item.hora+" hs"}</div>
+                                        <div class="paciente">
+                                            <div style="padding-right:.7rem">${item.Mascotas.Nombre}</div>
+                                            <div>${" - " + item.motivo}</div>
+                                        </div>
+                                    </div>
+                                </div>`})}                                              
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <pie-componente  id="footer" opcion="dos"></pie-componente>
+            </div>
 
         `
     }

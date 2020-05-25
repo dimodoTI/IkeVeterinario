@@ -1,22 +1,17 @@
 export const idiomas = {
     ES: {
-        onboarding: {
-            btn1: "Siguiente",
-            btn2: "Ya tengo cuenta.",
-            btn3: "Comenzar"
-        },
+
 
         iniciosession: {
             titulo: "Iniciá sesión",
             leyenda: "Completá tus datos para ingresar a tu cuenta",
             mail: "Ingresá tu mail",
-            mailPlaceholder: "nombre@mail.com",
+            mail_ph: "nombre@mail.com",
             clave: "Ingresá tu contraseña",
-            clavePlaceholder: "*******",
             datos: "Recordar mis datos",
             btn1: "Iniciar sesión",
             btn2: "Olvidé mi contraseña",
-            btn3: "",
+            btn3: "Ingresar sin registrarme",
             errorMail: {
                 err1: "Mail incorrecto",
                 err2: "wer"
@@ -25,6 +20,14 @@ export const idiomas = {
                 err1: "Tu contraseña debe tener 4 caraceres",
                 err2: "wer"
             }
+        },
+
+        bienvenidos: {
+            titulo: "Bienvenid@ a Iké",
+            titulo2: "Mascotas",
+            leyenda: "Seleccioná tu tipo de ingreso para continuar",
+            boton1: "Soy cliente",
+            boton2: "Soy veterinario"
         },
 
         recuperaclave: {
@@ -49,6 +52,7 @@ export const idiomas = {
             titulo: "¡Todo listo para recuperar tu contraseña!",
             leyenda: "Ingresá a tu casilla de mail y seguí los pasos para recuperar tu contraseña."
         },
+
         crearclave: {
             titulo: "Creá tu contraseña",
             leyenda: "Creá tu nueva contraseña para volver a acceder a tu cuenta.",
@@ -64,11 +68,13 @@ export const idiomas = {
                 err2: "wer"
             }
         },
+
         crearclavemsg: {
             titulo: "¡Genial!",
             leyenda: "Tu contraseña fue creada con éxito.",
             btn1: "Ingresar a mi cuenta"
         },
+
         accesoplan: {
             titulo: "Accedé a tu Plan Iké",
             leyenda: "Ingresá el DNI del titular para acceder a tu cobertura.",
@@ -82,6 +88,7 @@ export const idiomas = {
                 err2: "wer"
             }
         },
+
         vercobertura: {
             titulo: "¿Necesitás ayuda con tu cobertura Iké Mascotas?",
             leyenda: "Contacta a un asesor para hacer consultas o contratar un plan.",
@@ -94,13 +101,23 @@ export const idiomas = {
             leyenda: "Crea el perfil de tus Mascotas y accedé a su historia clínica",
             consulta: "Tenés una consulta",
             ingresar: "Ingresar",
-            footerTitulo: "¿Necesitás ayuda? Estamos para lo que necesites.",
+            footerTitulo1: "¿Necesitás ayuda?",
+            footerTitulo2: "Estamos para lo que necesites.",
             footerLeyenda: "Solicitar asistencia"
         },
         agenda: {
             titulo: "Agenda de ",
             leyenda: "Consultá tus próximas consultas de la semana.",
             tituloLista: "Tus próximas consultas"
+        },
+        pie: {
+            inicio: "Inicio",
+            agenda: "Agenda",
+            historial: "Historial",
+            mascota: "Mascotas",
+            consulta: "Consultas",
+            vacuna: "Vacunas",
+            foto: "Fotos"
         }
     }
 }

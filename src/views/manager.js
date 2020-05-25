@@ -55,6 +55,10 @@ import {
     pantallaAgenda
 } from "../views/formularios/agenda"
 
+import {
+    pantallaBienvenidos
+} from "../views/formularios/bienvenidos"
+
 const QUEPANTALLA = "ui.timeStampPantalla";
 export class viewManager extends connect(store, QUEPANTALLA)(LitElement) {
     constructor() {
@@ -84,6 +88,7 @@ export class viewManager extends connect(store, QUEPANTALLA)(LitElement) {
         <pantalla-splash id='splash'></pantalla-splash>
         <!-- <pantalla-onboarding id="onboarding"></pantalla-onboarding> -->
         <pantalla-iniciosesion id="iniciosesion"></pantalla-iniciosesion>
+        <pantalla-bienvenidos id="bienvenidos"></pantalla-bienvenidos>
         <pantalla-recuperaclave id="recuperaclave"></pantalla-recuperaclave>
         <pantalla-recuperaclavemsg id="recuperaclavemsg"></pantalla-recuperaclavemsg>
         <pantalla-crearclave id="crearclave"></pantalla-crearclave>
@@ -101,6 +106,7 @@ export class viewManager extends connect(store, QUEPANTALLA)(LitElement) {
                 this.shadowRoot.querySelector("#splash").hidden = state.ui.quePantalla != "splash";
                 // this.shadowRoot.querySelector("#onboarding").hidden = state.ui.quePantalla != "onboarding";
                 this.shadowRoot.querySelector("#iniciosesion").hidden = state.ui.quePantalla != "iniciosesion";
+                this.shadowRoot.querySelector("#bienvenidos").hidden = state.ui.quePantalla != "bienvenidos";
                 this.shadowRoot.querySelector("#recuperaclave").hidden = state.ui.quePantalla != "recuperaclave";
                 this.shadowRoot.querySelector("#recuperaclavemsg").hidden = state.ui.quePantalla != "recuperaclavemsg";
                 this.shadowRoot.querySelector("#crearclave").hidden = state.ui.quePantalla != "crearclave";

@@ -28,7 +28,7 @@ export class headerComponente extends connect(store)(LitElement) {
         return css `
         
             :host(){
-                position:absolute;
+                  position:absolute;
                 top:0;
                 left:0;
                 height: 20%;
