@@ -10,7 +10,7 @@ export const cabecera1 = css`
     padding: 0 1.5rem 0 1.5rem;
     border-radius:0 0 20px 20px;
     background-color: var(--color-blanco);
-    height: 100%;
+    height: calc(100vh * .18)
  }
  #header div{
      display:grid

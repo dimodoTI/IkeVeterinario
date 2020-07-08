@@ -1,119 +1,192 @@
-import {
-    html,
-    LitElement,
-    css
-} from "lit-element";
-import {
-    store
-} from "../../redux/store";
-import {
-    connect
-} from "@brunomon/helpers";
-import {
-    label
-} from "../css/label"
+import { html, LitElement, css } from "lit-element";
+import { store } from "../../redux/store";
+import { connect } from "@brunomon/helpers";
+import { button } from "../css/button"
 import {
     HOME,
     AGENDAFOOTER,
     HISTORIALFOOTER
 } from "../../../assets/icons/icons";
-import {
-    modoPantalla
-} from "../../redux/actions/ui";
-import {
-    idiomas
-} from "../../redux/datos/idiomas"
+import { modoPantalla } from "../../redux/actions/ui";
+import { idiomas } from "../../redux/datos/idiomas"
 
 export class pieComponente extends connect(store)(LitElement) {
     constructor() {
         super();
-        this.opcion = ""
+        this.opcion = "";
         this.idioma = "ES"
     }
 
     static get styles() {
-        return css `
-        ${label}
-        
+        return css`
+        ${button}
         :host{
-
-            display:grid;
-            grid-auto-flow:column;
-            grid-gap:.3rem;
+            display: grid;
+            position:relative; 
+            align-items:center; 
+            justify-content:center;
             background-color: var(--color-blanco);
-            align-items:center;
-            justify-items:center;
-            padding: 1rem;   
         }
-
-        .menu{
-
+        :host([media-size="small"]){
+            grid-template-rows: 100% ;
+            grid-template-columns: 100% ;
+        }
+        :host(:not([media-size="small"])){
+            grid-template-rows: 24% 76% ;
+            grid-template-columns: 100% ;
+        }
+        #pieCabecera{
+            width:100%;
+            height:100%;
+            background-image:var(--imagen-logo-splash);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 7vw;
+        }
+        :host([media-size="small"]) #pieCabecera{
+            display:none;
+         }
+        #pieMenu{
+            display: grid;
+            position:relative;
+            align-items:center; 
+            justify-content:center;
+            background-color: var(--color-blanco);
+        }
+        :host([media-size="small"]) #pieMenu{
+            grid-template-columns:repeat(3,2fr);
+            grid-template-rows: 60% 40%;
+            grid-gap:0.1rem;
+        }
+        :host(:not([media-size="small"])) #pieMenu{
+            grid-template-columns: 40% 60%;
+            grid-template-rows: 3rem 3rem 3rem ;
+            grid-auto-flow: column;
+            align-self: start;
+            grid-gap:0rem;
+        }
+        .img{
             display:grid;
-            grid-row: 2fr 1fr;
-            font-size: var(--font-pie-size);
-            font-weight:var(--font-pie-weight);
-            grid-gap:.3rem;
-            justify-items:center;
-            align-items:center;
-            color:var(--color-gris);
+            justify-content: center;
+            align-content: center;
+            cursor:pointer;
+            width:100%;
+            height:100%;
         }
-
-        .menu div svg{
+        :host(:not([media-size="small"])) .img{
+            border-left: solid 4px transparent;
+        }
+        .img[select="SI"]{
+            cursor: not-allowed;
+            pointer-events: none;  
+        }
+        .img[select="NO"]{
+            cursor: pointer;
+            pointer-events: auto;  
+        }
+        :host(:not([media-size="small"])) .img[select="SI"]{
+            border-left: solid 4px var(--color-azul-oscuro);
+            background-color:var(--color-gris-fondo);
+        }
+        .lbl{
+            width:100%;
+            height:100%;
+            display:grid;
+            justify-content: center;
+            align-content: center;
+            font-size: var(--font-label-size);
+            font-weight: var(--font-label-weight);
+            color:var(--color-gris-medio);
+            cursor:pointer;
+        }
+        :host(:not([media-size="small"])) .lbl{
+            justify-content: start;
+        }
+        .lbl[select="SI"]{
+            color:var(--color-azul-oscuro);
+            background-color:var(--color-gris-fondo);
+            cursor: not-allowed;
+            pointer-events: none;  
+        }
+        svg{
             fill:var(--color-gris);
             stroke:var(--color-gris);
             height:1rem;
             width:1.1rem;
         }
-
-
-        .menu[opcion="select"] {
-            cursor: not-allowed;
-            pointer-events: none;  
-            color:var(--color-azul-oscuro);
-            font-weight:var(--font-pie-select-weight);
-            font-size:var(--font-pie-select-size);
-            
-        }
-
-        .menu[opcion="select"] div svg{
+        :host(:not([media-size="small"])) svg{
+            width:1.5rem;
+            height:1.5rem;
+         }
+        .img[select="SI"] svg{
             fill:var(--color-azul-oscuro);
             stroke:var(--color-azul-oscuro);
-        }`
-    }
-    attributeChangedCallback(name, oldVal, newVal) {
-        console.log('attribute change: ', name, newVal);
-        super.attributeChangedCallback(name, oldVal, newVal);
+        }
+        .img[select="NO"] svg{
+            fill:var(--color-gris);
+            stroke:var(--color-gris);
+        }
+        #divAyudaPie{
+            position:absolute;
+            display:grid;
+            left:0;
+            bottom:1rem;
+            grid-template-rows: 30% 40% 40%;
+            width:100%;
+            grid-gap:0rem;
+            justify-items:center;
+        }
+        :host([media-size="small"]) #divAyudaPie{
+            display:none;
+        }
+        .lblayudaPie{
+            font-size: var(--font-bajada-size);
+            font-weight: var(--font-bajada-weight);
+            width:100%;
+            text-align:center;
+        }
+        #btn-ayudaPie{
+            height:1.8rem;
+            width:90%;
+            font-size: var(--font-label-size);
+            font-weight: var(--font-label-weight);
+        }
+        :host([media-size="medium"]) #btn-ayudaPie{
+            font-size: var(--font-error-size);
+        }
+
+        `
     }
 
     render() {
-        return html `
-
-            <div id="img-home"  @click="${this.clickBoton1}" class="menu"  opcion="${this.opcion=='uno'? 'select' : ''}">
-                <div>
+        return html`
+            <div id="pieCabecera">
+            </div>
+            <div id="pieMenu">
+                <div id="img-usuario" select=${this.opcion == 'uno' ? 'SI' : 'NO'} @click="${this.clickBoton1}" class="img">
                     ${HOME}
                 </div>
-                <div id="lbl-home">
-                    ${idiomas[this.idioma].pie.inicio}
-                </div>
-            </div>
-
-
-            <div id="img-mascota"  @click="${this.clickBoton2}" class="menu" opcion="${this.opcion=='dos'? 'select' : ''}">
-                <div>
+                <div id="img-publicaciones" select=${this.opcion == 'dos' ? 'SI' : 'NO'}  @click="${this.clickBoton2}" class="img">
                     ${AGENDAFOOTER}
-                </div>
-                <div id="lbl-agenda">
-                    ${idiomas[this.idioma].pie.agenda}
-                </div>
-            </div>  
-
-            <div id="img-consulta"  @click="${this.clickBoton3}" class="menu" opcion="${this.opcion=='tres'? 'select' : ''}">
-                <div>
+                </div>  
+                <div id="img-tablas" select=${this.opcion == 'tres' ? 'SI' : 'NO'} @click="${this.clickBoton3}" class="img">
                     ${HISTORIALFOOTER}
                 </div>
-                <div id="lbl-historial">
+                <div id="lbl-usuario" select=${this.opcion == 'uno' ? 'SI' : 'NO'} @click="${this.clickBoton1}"  class="lbl">
+                    ${idiomas[this.idioma].pie.inicio}
+                </div>
+                <div id="lbl-publicaciones" select=${this.opcion == 'dos' ? 'SI' : 'NO'} @click="${this.clickBoton2}"  class="lbl">
+                    ${idiomas[this.idioma].pie.agenda}
+                </div>
+                <div id="lbl-tablas" select=${this.opcion == 'tres' ? 'SI' : 'NO'} @click="${this.clickBoton3}"  class="lbl">
                     ${idiomas[this.idioma].pie.historial}
                 </div>
+
+            </div>
+            <div id="divAyudaPie">
+                <hr style="width:90%; border-top: 2px solid var(--color-gris-claro)">
+                <div><label class="lblayudaPie">${idiomas[this.idioma].pie.lblAyuda01}</label></div>
+                <button btn3 id="btn-ayudaPie" @click=${this.clickAyudaPie}>${idiomas[this.idioma].pie.btnAyuda}</button>
             </div>
         `
     }
@@ -127,13 +200,16 @@ export class pieComponente extends connect(store)(LitElement) {
         store.dispatch(modoPantalla("historial"))
     }
 
-
     static get properties() {
         return {
             opcion: {
                 type: String,
+                reflect: true
+            },
+            mediaSize: {
+                type: String,
                 reflect: true,
-                atributte: "opcion"
+                attribute: 'media-size'
             }
         }
     }

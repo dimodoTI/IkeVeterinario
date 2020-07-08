@@ -15,13 +15,6 @@ import {
 } from "../views/componentes/splashscreen";
 /* import {onboardingComponente} from "../views/componentes/onboardingcomponente"; */
 import {
-    inicioSesionComponente
-} from "../views/componentes/iniciosesioncomponente";
-import {
-    recuperaClaveComponente
-} from "../views/componentes/recuperaclavecomponente";
-
-import {
     pantallaSplash
 } from "../views/formularios/splash";
 // import { pantallaOnboarding } from "../views/formularios/onboarding";
@@ -58,16 +51,18 @@ import {
 import {
     pantallaBienvenidos
 } from "../views/formularios/bienvenidos"
+import { pantallaVideo } from "../views/formularios/video"
 
+const MEDIA_CHANGE = "ui.media.timeStamp"
 const QUEPANTALLA = "ui.timeStampPantalla";
-export class viewManager extends connect(store, QUEPANTALLA)(LitElement) {
+export class viewManager extends connect(store, MEDIA_CHANGE, QUEPANTALLA)(LitElement) {
     constructor() {
         super();
         this.current = "IKE-Mascotas";
     }
 
     static get styles() {
-        return css `
+        return css`
         :host{
             display: grid;                 
             grid-gap:1rem;
@@ -81,27 +76,29 @@ export class viewManager extends connect(store, QUEPANTALLA)(LitElement) {
             height: 100%;
             width: 100%;
           }
-        `;
+        `
     }
     render() {
-        return html `
-        <pantalla-splash id='splash'></pantalla-splash>
+        return html`
+        <pantalla-splash id='splash' media-size="${this.mediaSize}"></pantalla-splash>
         <!-- <pantalla-onboarding id="onboarding"></pantalla-onboarding> -->
-        <pantalla-iniciosesion id="iniciosesion"></pantalla-iniciosesion>
-        <pantalla-bienvenidos id="bienvenidos"></pantalla-bienvenidos>
-        <pantalla-recuperaclave id="recuperaclave"></pantalla-recuperaclave>
-        <pantalla-recuperaclavemsg id="recuperaclavemsg"></pantalla-recuperaclavemsg>
-        <pantalla-crearclave id="crearclave"></pantalla-crearclave>
-        <pantalla-crearclavemsg id="crearclavemsg"></pantalla-crearclavemsg>
-        <pantalla-accesoplan id="accesoplan"></pantalla-accesoplan>
-        <pantalla-vercobertura id="vercobertura"></pantalla-vercobertura>
-        <pantalla-misconsulta id="misconsultas"></pantalla-misconsulta>
-        <pantalla-agenda id="agenda"></pantalla-agenda>
+        <pantalla-iniciosesion id="iniciosesion" media-size="${this.mediaSize}"></pantalla-iniciosesion>
+        <pantalla-bienvenidos id="bienvenidos" media-size="${this.mediaSize}"></pantalla-bienvenidos>
+        <pantalla-recuperaclave id="recuperaclave" media-size="${this.mediaSize}"></pantalla-recuperaclave>
+        <pantalla-recuperaclavemsg id="recuperaclavemsg" media-size="${this.mediaSize}"></pantalla-recuperaclavemsg>
+        <pantalla-crearclave id="crearclave" media-size="${this.mediaSize}"></pantalla-crearclave>
+        <pantalla-crearclavemsg id="crearclavemsg" media-size="${this.mediaSize}"></pantalla-crearclavemsg>
+        <pantalla-accesoplan id="accesoplan" media-size="${this.mediaSize}"></pantalla-accesoplan>
+        <pantalla-vercobertura id="vercobertura" media-size="${this.mediaSize}"></pantalla-vercobertura>
+        <pantalla-misconsulta id="misconsultas" media-size="${this.mediaSize}"></pantalla-misconsulta>
+        <pantalla-agenda id="agenda" media-size="${this.mediaSize}"></pantalla-agenda>
+        <pantalla-video id="video" media-size="${this.mediaSize}"></pantalla-video>>
         `;
     }
 
     stateChanged(state, name) {
-        if (name == QUEPANTALLA) {
+        if (name == QUEPANTALLA || name == MEDIA_CHANGE) {
+            this.mediaSize = state.ui.media.size
             if (this.shadowRoot.children.length > 0) {
                 this.shadowRoot.querySelector("#splash").hidden = state.ui.quePantalla != "splash";
                 // this.shadowRoot.querySelector("#onboarding").hidden = state.ui.quePantalla != "onboarding";
@@ -115,6 +112,7 @@ export class viewManager extends connect(store, QUEPANTALLA)(LitElement) {
                 this.shadowRoot.querySelector("#vercobertura").hidden = state.ui.quePantalla != "vercobertura";
                 this.shadowRoot.querySelector("#misconsultas").hidden = state.ui.quePantalla != "misconsultas";
                 this.shadowRoot.querySelector("#agenda").hidden = state.ui.quePantalla != "agenda";
+                this.shadowRoot.querySelector("#video").hidden = state.ui.quePantalla != "video";
             }
         }
 

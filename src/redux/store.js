@@ -19,12 +19,32 @@ import {
 import {
   middleware as api
 } from "./middleware/api";
+import {
+  middleware as autorizacion
+} from "./middleware/autorizacion";
+import {
+  middleware as rest
+} from "./middleware/REST";
+import {
+  middleware as usuario
+} from "./middleware/usuario";
+import {
+  middleware as puestos
+} from "./middleware/puestos";
+import {
+  middleware as reservas
+} from "./middleware/reservas";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 let mdw = [
   api,
-  ...ui
+  rest,
+  ...ui,
+  ...autorizacion,
+  ...usuario,
+  ...puestos,
+  ...reservas
 ]
 
 if (process.env.NODE_ENV !== 'production') {

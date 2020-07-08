@@ -51,7 +51,7 @@ export class inicioSesionComponente extends connect(store)(LitElement) {
     }
 
     static get styles() {
-        return css `
+        return css`
         ${button}
         ${input}
         ${label}
@@ -62,9 +62,6 @@ export class inicioSesionComponente extends connect(store)(LitElement) {
             height:100%;
             width: 100%;
             background-color:var(--color-gris-fondo);
-            /* background-color:#EFF2FF; */
-            
-
         }
 
         /* #header{
@@ -137,7 +134,7 @@ export class inicioSesionComponente extends connect(store)(LitElement) {
         `
     }
     render() {
-        return html `
+        return html`
 <!--         <div id="header">
             <label id="lblTitulo">${idiomas[this.idioma].iniciosession.titulo}</label>
             <label id="lblLeyenda">${idiomas[this.idioma].iniciosession.leyenda}</label>
@@ -228,8 +225,8 @@ export class inicioSesionComponente extends connect(store)(LitElement) {
     clickBoton3() {
         this.clickBtn2();
     }
-    stateChanged(state, name) {}
-    firstUpdated() {}
+    stateChanged(state, name) { }
+    firstUpdated() { }
 
     static get properties() {
         return {

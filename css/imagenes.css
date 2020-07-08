@@ -10,6 +10,8 @@ html {
     --icon-punto-lleno: url("../assets/images/icon/punto-lleno.svg"); 
     --icon-punto-vacio: url("../assets/images/icon/punto-vacio.svg"); 
     --icon-cerrar: url("../assets/images/icon/x.svg"); 
+    --imagen-video-activo: url("../assets/images/video_fondo_a.svg");
+    --imagen-video-inactivo: url("../assets/images/video_fondo_i.svg");
 }
 view-manager {
     background-size: 100vw 100vh;

@@ -2,7 +2,7 @@ import {
    css
 } from "lit-element"
 
-export const button = css `         
+export const button = css`         
    button[btn1]{
       display:grid;            
       grid-auto-flow:column;
@@ -80,7 +80,7 @@ export const button = css `
       grid-gap:.3rem;
       cursor:pointer;
       color:var(--color-celeste);
-      background-color:var(--color-gris-claro);
+      background-color:transparent;
       font-size: var(--font-bajada-size);
       font-weight: var(--font-bajada-weight);
       border-radius:.4rem;
@@ -104,25 +104,5 @@ export const button = css `
       background-color: var(--color-gris);
       cursor: not-allowed;
       pointer-events: none;
-   }
-
-   button[reverse]{
-      display:grid;            
-      grid-auto-flow:column;
-      align-items:center;
-      grid-gap:.3rem;
-      cursor:pointer;
-      color:var(--color-celeste);
-      background-color:#ffffff;
-      font-size: var(--font-bajada-size);
-      font-weight: var(--font-bajada-weight);
-      border-radius:.4rem;
-      padding:.5rem;
-      box-shadow: 0 3px 6px 0 var(--orange-5);
-      transition-duration: 0.4s;
-      text-decoration: none;
-      border:none;
-      outline: none;
-      border:1px solid var(--color-celeste)
    }
 `

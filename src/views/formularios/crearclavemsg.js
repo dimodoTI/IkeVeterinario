@@ -1,9 +1,9 @@
-import {html,LitElement,css} from "lit-element";
-import {store} from "../../redux/store";
-import {connect} from "@brunomon/helpers";
-import {idiomas } from "../../redux/datos/idiomas"
-import {label} from "../css/label"
-import {modoPantalla} from "../../redux/actions/ui";
+import { html, LitElement, css } from "lit-element";
+import { store } from "../../redux/store";
+import { connect } from "@brunomon/helpers";
+import { idiomas } from "../../redux/datos/idiomas"
+import { label } from "../css/label"
+import { modoPantalla } from "../../redux/actions/ui";
 import { button } from "../css/button"
 export class pantallaCrearClaveMsg extends connect(store)(LitElement) {
     constructor() {
@@ -65,10 +65,10 @@ export class pantallaCrearClaveMsg extends connect(store)(LitElement) {
             font-weight: var(--font-bajada-weight);
        }
         `
-    } 
+    }
     render() {
-        return html `
-            <div id="x">
+        return html`
+            <div id="x" @click=${this.clickBoton1}>
             </div>               
             <label id="titulo">
             ${idiomas[this.idioma].crearclavemsg.titulo}
@@ -83,8 +83,8 @@ export class pantallaCrearClaveMsg extends connect(store)(LitElement) {
 
         `
     }
-    
-    clickBoton1(){
+
+    clickBoton1() {
         store.dispatch(modoPantalla("iniciosesion"))
     }
     stateChanged(state, name) {

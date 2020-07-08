@@ -1,7 +1,7 @@
 export const idiomas = {
     ES: {
-
-
+        diasCorto: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+        mesCorto: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dic"],
         iniciosession: {
             titulo: "Iniciá sesión",
             leyenda: "Completá tus datos para ingresar a tu cuenta",
@@ -97,8 +97,9 @@ export const idiomas = {
             btn3: "Volver"
         },
         misconsultas: {
-            titulo: "Hola pibe",
+            titulo: "Hola",
             leyenda: "Crea el perfil de tus Mascotas y accedé a su historia clínica",
+            lblFiltro: "Seleccione su puesto:",
             consulta: "Tenés una consulta",
             ingresar: "Ingresar",
             footerTitulo1: "¿Necesitás ayuda?",
@@ -117,7 +118,15 @@ export const idiomas = {
             mascota: "Mascotas",
             consulta: "Consultas",
             vacuna: "Vacunas",
-            foto: "Fotos"
+            foto: "Fotos",
+            lblAyuda: "¿Necesitás ayuda?.",
+            lblAyuda01: "¿Necesitás ayuda?.",
+            btnAyuda: "Solicitar asistencia"
+        },
+        video: {
+            conectando: "Conectando ...",
+            titulo: "Consulta Online",
+            leyenda: "Accedé a consulta con un veterinario."
         }
     }
 }

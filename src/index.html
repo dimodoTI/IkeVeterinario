@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>IKE-Veterinario</title>
+    <title>IKE-Mascotas</title>
     <link rel="manifest" href="manifest.json" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -51,6 +51,7 @@
     </div>
 </body>
 <script>
+
     let newWorker;
 
     //The click event on the pop up notification
@@ -61,7 +62,6 @@
     });
 
     if ('serviceWorker' in navigator) {
-
         navigator.serviceWorker.register('/Service-worker.js').then(reg => {
             reg.addEventListener('updatefound', () => {
                 // A wild service worker has appeared in reg.installing!

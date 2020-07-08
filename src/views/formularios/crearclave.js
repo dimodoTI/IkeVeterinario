@@ -1,101 +1,48 @@
-import {html,LitElement,css} from "lit-element";
-import {store} from "../../redux/store";
-import {connect} from "@brunomon/helpers";
-import {idiomas } from "../../redux/datos/idiomas"
-import {label} from "../css/label"
-import {modoPantalla} from "../../redux/actions/ui";
-import {crearClave} from "../componentes/crearclavecomponente"
+import { html, LitElement, css } from "lit-element";
+import { store } from "../../redux/store";
+import { connect } from "@brunomon/helpers";
+import { idiomas } from "../../redux/datos/idiomas"
+import { button } from "../css/button"
+import { ikeInput } from "../css/ikeInput"
+import { cabecera1 } from "../css/cabecera1"
+import { media01 } from "../css/media01"
+import { modoPantalla } from "../../redux/actions/ui";
+import { ATRAS } from "../../../assets/icons/icons"
 export class pantallaCrearClave extends connect(store)(LitElement) {
     constructor() {
         super();
         this.hidden = true
         this.idioma = "ES"
-        this.item={mail:"",clave:"",recordar:""}
+        this.item = { mail: "", clave: "", recordar: "" }
         this.label = ""
     }
 
     static get styles() {
         return css`
-        ${label}
+        ${ikeInput}
+        ${button}
+        ${cabecera1}
+        ${media01}
         :host{
             position: absolute;
             top: 0rem;
             left: 0rem;  
             height:100%;
             width: 100%;
-            background-color:var(--color-gris-claro);
+            background-color:var(--color-gris-fondo);
+            display:grid;
+            grid-template-rows:2fr 8fr
         }
         :host([hidden]){
             display: none; 
         } 
-        #header{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            height: 20%;
-            width: 100%;
-            background-color: var(--color-blanco);
-         }
-        #titulo{
-            position: absolute;
-            display: flex;
-            top: .1rem;
-            left: 1.5rem;
-            height: 40%;
-            width: 90%;
-            background-color: transparent;
-            align-items:center; 
-            justify-content:left;           
-        }
-        #atras{
-            position: relative;
-            height: 100%;
-            width: 10%;
-            background-color: transparent;
-            background-image:var(--icon-flecha-izq);
-            background-repeat: no-repeat;
-            background-position: left center;
-            background-size: 100%;
-        }
-        #lblTitulo{
-            position: relative;
-            left: 0rem;
-            height: 100%;
-            width: 90%;
-            background-color: transparent;
-            display: flex;
-            align-items:center; 
-            justify-content:left;
-            text-align: left;
-            font-size: var(--font-header-h1-size);
-            font-weight: var(--font-header-h1-weight);
-        }
-        #lblLeyenda{
-            position: absolute;
-            bottom: .1rem;
-            left: 1.5rem;
-            height: 60%;
-            width: 80%;
-            background-color: transparent;
-            display: flex;
-            align-items:center; 
-            justify-content:left;
-            text-align: left;
-            font-size: var(--font-header-h2-size);
-            font-weight: var(--font-header-h2-weight);
-        }
         #cuerpo{
-            position: absolute;
-            top: 20%;
-            left: 0px;
-            height: 45%;
-            width: 100%;
             background-color: transparent;
             display:grid;
+            padding:2rem;
             grid-auto-flow:row;
-            grid-gap:0rem;
-            align-items:center;
-            justify-items:center;
+            grid-gap:.8rem;
+            align-content:start
         }
         label {
             position: relative;
@@ -107,27 +54,78 @@ export class pantallaCrearClave extends connect(store)(LitElement) {
             font-weight: var(--font-bajada-weight);
         }
         `
-    } 
+    }
     render() {
-        return html `
-        <div id="header">
-            <div id="titulo">
-                <div id="atras" @click=${this.clickBoton1}></div>
-                <label id="lblTitulo">${idiomas[this.idioma].crearclave.titulo}</label>
+        return html`
+        <div id="header">        
+            <div id="bar">
+                <div @click=${this.clickBoton1}>${ATRAS}</div>
+                <div id="lblTitulo">${idiomas[this.idioma].crearclave.titulo}</div>
             </div>
-            <label id="lblLeyenda">${idiomas[this.idioma].crearclave.leyenda}</label>
+            <div id="lblLeyenda">${idiomas[this.idioma].crearclave.leyenda}</div>
         </div>
         <div id="cuerpo">
-            <crearclave-componente 
-            .clickBtn1=${function () {store.dispatch(modoPantalla("recuperaclavemsg"))
-            }}>
-            </crearclave-componente>
+            <div class="ikeInput">
+                <label id="lblClave1">${idiomas[this.idioma].crearclave.clave1}</label>
+                <input id="txtClave1" type="password" @input=${this.activar} }>
+                <label id="lblErrorClave1" error oculto>${idiomas[this.idioma].crearclave.errorClave1.err1}</label>
+            </div>
+
+            <div class="ikeInput">
+                <label id="lblClave2">${idiomas[this.idioma].crearclave.clave2}</label>
+                <input id="txtClave2" type="password" @input=${this.activar} }>
+                <label id="lblErrorClave2" error oculto>${idiomas[this.idioma].crearclave.errorClave2.err1}</label>
+            </div>
+            <button id="btn-recuperar" btn1 apagado @click=${this.clickBoton2}>
+            ${idiomas[this.idioma].crearclave.btn1}
+            </button>
         </div>
         `
     }
-    
-    clickBoton1(){
-        store.dispatch(modoPantalla("iniciosesion"))
+    activar() {
+        this.activo = true
+        const clave1 = this.shadowRoot.querySelector("#txtClave1")
+        const clave2 = this.shadowRoot.querySelector("#txtClave2")
+        if (clave1.value.length < 4) {
+            this.activo = false
+        }
+        if (clave2.value.length < 4) {
+            this.activo = false
+        }
+        if (this.activo) {
+            this.shadowRoot.querySelector("#btn-recuperar").removeAttribute("apagado")
+        } else {
+            this.shadowRoot.querySelector("#btn-recuperar").setAttribute("apagado", "")
+        }
+        this.update()
+    }
+    valido() {
+        [].forEach.call(this.shadowRoot.querySelectorAll("[error]"), element => {
+            element.setAttribute("oculto", "")
+        })
+        let valido = true
+        const clave1 = this.shadowRoot.querySelector("#txtClave1")
+        const clave2 = this.shadowRoot.querySelector("#txtClave2")
+        if (clave1.value.length < 8) {
+            valido = false
+            this.shadowRoot.querySelector("#lblErrorClave1").removeAttribute("oculto");
+        }
+        if (clave2.value.length < 8) {
+            valido = false
+            this.shadowRoot.querySelector("#lblErrorClave2").removeAttribute("oculto");
+        }
+        this.update()
+        return valido
+    }
+    clickBoton1() {
+        store.dispatch(modoPantalla("iniciosesion", "crearclave"))
+    }
+    clickBoton2() {
+        if (this.activo) {
+            if (this.valido()) {
+                store.dispatch(modoPantalla("crearclavemsg", "crearclave"));
+            }
+        }
     }
     stateChanged(state, name) {
     }
