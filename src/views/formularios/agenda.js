@@ -266,9 +266,9 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
                                         </div>
 
                                         <div class="agenda">
-                                            <div id="divVideo" @click=${this.clickVideo}>
+                                            <div id="divVideo">
                                                 <div style="align-self: center;">${this.queHora(item.HoraAtencion) + " hs"}</div>
-                                                <div id="divImgVideo">${VIDEO}</div>
+                                                <div id="divImgVideo"  @click=${this.clickVideo}>${VIDEO}</div>
                                             </div>
                                             <div class="paciente">
                                                 <div style="padding-right:.7rem">${item.Mascota.Nombre}</div>
