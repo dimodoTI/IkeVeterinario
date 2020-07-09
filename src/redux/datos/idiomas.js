@@ -127,6 +127,13 @@ export const idiomas = {
             conectando: "Conectando ...",
             titulo: "Consulta Online",
             leyenda: "Accedé a consulta con un veterinario."
+        },
+        diagnosticocomponente: {
+            titulo: "Indicá el diagnóstico y pasos a seguir:",
+            diagnostico_ph: "Tomar jarabe para la tos CanTos 200ml. 1 tapita cada 8hs durante 7 días. Si el cuadro se prolonga volver a consultar.",
+            btnAdjuntar: "Adjuntar archivo",
+            btnAceptar: "Enviar diagnóstico",
+            btnCancelar: "Ahora no"
         }
     }
 }

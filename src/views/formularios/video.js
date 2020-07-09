@@ -177,7 +177,7 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
                 <div id="cortar" @click="${this.colgar}">${COLGAR}</div>
             </div>
         </div>
-        <pie-componente id="pie" opcion="tres" media-size="${this.mediaSize}">
+        <pie-componente id="pie" opcion="cero" media-size="${this.mediaSize}">
         </pie-componente>
         `
     }
@@ -185,7 +185,7 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
         if (this.shadowRoot.querySelector("#cuerpo").hasAttribute("llamando")) {
             store.dispatch(modoPantalla("agenda"))
         } else {
-            store.dispatch(modoPantalla("misconsultas"))
+            store.dispatch(modoPantalla("diagnosticos"))
         }
     }
     stateChanged(state, name) {

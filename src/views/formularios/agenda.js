@@ -38,17 +38,18 @@ import {
 } from "../css/proxima"
 
 import { get as getPuesto } from "../../redux/actions/puestos";
-import { get as getReservas, patch as patchReservas, add as addReservas } from "../../redux/actions/reservas";
+import { get as getReservas, getVeterinario as getReservasVeterinario, patch as patchReservas, add as addReservas } from "../../redux/actions/reservas";
 
 const PUESTO_TIMESTAMP = "puesto.timeStamp"
 const MODO_PANTALLA = "ui.timeStampPantalla"
 const RESERVAS_TIMESTAMP = "reservas.timeStamp"
+const RESERVASVETERINARIO_TIMESTAMP = "reservas.timeStampVeterinario"
 const RESERVAS_UPDATETIMESTAMP = "reservas.updateTimeStamp"
 const RESERVAS_ADDTIMESTAMP = "reservas.addTimeStamp"
 const RESERVAS_ERRORGETTIMESTAMP = "reservas.errorTimeStamp"
 const RESERVAS_ERROROTROSTIMESTAMP = "reservas.commandErrorTimeStamp"
 
-export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTALLA, RESERVAS_TIMESTAMP, RESERVAS_UPDATETIMESTAMP, RESERVAS_ADDTIMESTAMP, RESERVAS_ERRORGETTIMESTAMP, RESERVAS_ERROROTROSTIMESTAMP)(LitElement) {
+export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTALLA, RESERVAS_TIMESTAMP, RESERVASVETERINARIO_TIMESTAMP, RESERVAS_UPDATETIMESTAMP, RESERVAS_ADDTIMESTAMP, RESERVAS_ERRORGETTIMESTAMP, RESERVAS_ERROROTROSTIMESTAMP)(LitElement) {
     constructor() {
         super();
 
@@ -58,9 +59,6 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
         this.puestoSeleccionado = -1
         this.puestos = null
         this.reservas = null
-        this.reservasJson = { token: "", filter: "", expand: "Mascota($select = Nombre), Tramo", orderby: "FechaAtencion,HoraAtencion" }
-        //this.reservasJson = { token: "", expand: "Mascota($select = Nombre), Tramo", orderby: "FechaAtencion,HoraAtencion" }
-
     }
 
     static get styles() {
@@ -133,11 +131,6 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
             width:90%;
             height:12vh;
             padding-left:1.2rem;
-        }
-        .fecha{
-            border-top: 1px solid var(--color-gris-claro);
-            border-left: 1px solid var(--color-gris-claro);
-            border-bottom: 1px solid var(--color-gris-claro);
         }
         .row .fecha{
             display:grid;
@@ -219,6 +212,7 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
             align-self:center;
             justify-self:center;
             cursor:pointer;
+            z-index:10;
         }
         #divImgVideo svg{
             height:1.5rem;
@@ -312,11 +306,9 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
     stateChanged(state, name) {
         if (name == MODO_PANTALLA && state.ui.quePantalla == "agenda") {
             let miToken = store.getState().cliente.datos.token
-            this.reservasJson.token = miToken
             let d = new Date()
             let filtroFecha = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
-            this.reservasJson.filter = "FechaAtencion ge " + filtroFecha
-            store.dispatch(getReservas(this.reservasJson))
+            store.dispatch(getReservasVeterinario(miToken, "FechaAtencion ge " + filtroFecha))
             if (state.puestos.entities) {
                 this.puestos = state.puestos.entities
                 this.puestoSeleccionado = this.puestos[0].Id
@@ -324,9 +316,9 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
                 store.dispatch(getPuesto({}))
             }
         }
-        if (name == RESERVAS_TIMESTAMP && state.ui.quePantalla == "agenda") {
-            if (state.reservas.entities) {
-                this.reservas = state.reservas.entities
+        if (name == RESERVASVETERINARIO_TIMESTAMP && state.ui.quePantalla == "agenda") {
+            if (state.reservas.entitiesVeterinario) {
+                this.reservas = state.reservas.entitiesVeterinario
                 if (this.puestos) {
                     this.update()
                 }
@@ -348,12 +340,12 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
     clickMostrarDatos() {
         this.puestoSeleccionado = this.shadowRoot.querySelector("#selectPuesto").value
         this.update()
-        //        let miToken = store.getState().cliente.datos.token
-        //        store.dispatch(getReservas({ token: miToken, filter: "FechaAtencion ge now() and Tramo/PuestoId eq " + this.puestoSeleccionado, expand: "Mascota($select = Nombre), Tramo", orderby: "FechaAtencion,HoraAtencion" }))
     }
     clickBucar() {
         let miToken = store.getState().cliente.datos.token
-        store.dispatch(getReservas(this.reservasJson))
+        let d = new Date()
+        let filtroFecha = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
+        store.dispatch(getReservasVeterinario(miToken, "FechaAtencion ge " + filtroFecha))
     }
     static get properties() {
         return {

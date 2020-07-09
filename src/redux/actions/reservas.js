@@ -1,4 +1,5 @@
 export const GET = "[reservas] GET";
+export const GET_VETERINARIO = "[reservas] GET_VETERINARIO";
 export const ADD = "[reservas] ADD";
 export const PATCH = "[reservas] PATCH";
 export const UPDATE = "[reservas] UPDATE";
@@ -7,6 +8,7 @@ export const EDIT = "[reservas] EDIT"
 
 
 export const GET_SUCCESS = "[reservas] GET success";
+export const GET_VETERINARIO_SUCCESS = "[reservas] GET_VETERINARIO success";
 export const ADD_SUCCESS = "[reservas] ADD success";
 export const PATCH_SUCCESS = "[reservas] PATCH success";
 export const UPDATE_SUCCESS = "[reservas] UPDATE success";
@@ -24,6 +26,11 @@ export const REMOVE_ERROR = "[reservas] REMOVE error";
 export const get = (options) => ({
     type: GET,
     options: options
+});
+
+export const getVeterinario = (token, filter) => ({
+    type: GET_VETERINARIO,
+    options: { token: token, filter: filter, expand: "Mascota($select = Nombre), Tramo", orderby: "FechaAtencion,HoraAtencion" }
 });
 
 export const add = (body, token) => ({

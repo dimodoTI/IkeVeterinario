@@ -1,6 +1,8 @@
 import {
     GET,
+    GET_VETERINARIO,
     GET_SUCCESS,
+    GET_VETERINARIO_SUCCESS,
     GET_ERROR,
     ADD,
     ADD_SUCCESS,
@@ -40,6 +42,9 @@ export const get = ({
     next(action);
     if (action.type === GET) {
         dispatch(apiRequest(ikeReservasQuery, action.options, GET_SUCCESS, GET_ERROR))
+    }
+    if (action.type === GET_VETERINARIO) {
+        dispatch(apiRequest(ikeReservasQuery, action.options, GET_VETERINARIO_SUCCESS, GET_ERROR))
     }
 };
 
