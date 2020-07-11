@@ -22,7 +22,7 @@ import {
 import { mediaConMenu01 } from "../css/mediaConMenu01"
 
 import {
-    VIDEO, REFRESH
+    VIDEO, REFRESH, ARCHIVO
 } from "../../../assets/icons/icons"
 
 import {
@@ -38,7 +38,7 @@ import {
 } from "../css/proxima"
 
 import { get as getPuesto } from "../../redux/actions/puestos";
-import { get as getReservas, getVeterinario as getReservasVeterinario, patch as patchReservas, add as addReservas } from "../../redux/actions/reservas";
+import { get as getReservas, enAtencion as reservasEnAtencion, getVeterinario as getReservasVeterinario, patch as patchReservas, add as addReservas } from "../../redux/actions/reservas";
 
 const PUESTO_TIMESTAMP = "puesto.timeStamp"
 const MODO_PANTALLA = "ui.timeStampPantalla"
@@ -70,7 +70,6 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
         :host{
             display: grid;
             background-color:var(--color-gris-fondo);
-            height: 100vh;
             width: 100%;   
             padding:0;
             margin:0;
@@ -83,6 +82,7 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
         }
         :host(:not([media-size="small"])){
             grid-template-rows:100%;
+            height:100vh;
         }
         #gridContenedor{
             grid-template-rows:18% 82%;           
@@ -208,13 +208,17 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
             display:grid;
             grid-template-columns: 80% 20%;
         }
-        #divImgVideo{
+        #divImgVideo, #divImgAtencion{
             align-self:center;
             justify-self:center;
             cursor:pointer;
             z-index:10;
         }
         #divImgVideo svg{
+            height:1.5rem;
+            width: 1.5rem;
+        }
+        #divImgAtencion svg{
             height:1.5rem;
             width: 1.5rem;
         }
@@ -262,7 +266,8 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
                                         <div class="agenda">
                                             <div id="divVideo">
                                                 <div style="align-self: center;">${this.queHora(item.HoraAtencion) + " hs"}</div>
-                                                <div id="divImgVideo"  @click=${this.clickVideo}>${VIDEO}</div>
+                                                <div id="divImgVideo" style="display:${item.Atencion ? 'none' : 'grid'}" .item=${item}  @click="${this.clickVideo}">${VIDEO}</div>
+                                                <div id="divImgAtencion" style="display:${item.Atencion ? 'grid' : 'none'}" .item=${item}  @click="${this.clickAtencion}">${ARCHIVO}</div>
                                             </div>
                                             <div class="paciente">
                                                 <div style="padding-right:.7rem">${item.Mascota.Nombre}</div>
@@ -304,11 +309,13 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
         return true
     }
     stateChanged(state, name) {
+        this.style.height = window.innerHeight + "px"
         if (name == MODO_PANTALLA && state.ui.quePantalla == "agenda") {
             let miToken = store.getState().cliente.datos.token
             let d = new Date()
-            let filtroFecha = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
-            store.dispatch(getReservasVeterinario(miToken, "FechaAtencion ge " + filtroFecha))
+            let filtroFecha = d.getUTCFullYear() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCDate()
+            //            store.dispatch(getReservasVeterinario(miToken, "FechaAtencion ge " + filtroFecha))
+            store.dispatch(getReservasVeterinario(miToken, "FechaAtencion ge 2020-01-01"))
             if (state.puestos.entities) {
                 this.puestos = state.puestos.entities
                 this.puestoSeleccionado = this.puestos[0].Id
@@ -334,8 +341,36 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
             }
         }
     }
-    clickVideo() {
+    clickVideo(e) {
+        let arr = e.currentTarget.item;
+        //let d = new Date(arr.FechaAtencion)
+        //let fecha = d.getUTCFullYear() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCDate()
+        let h = ("0" + arr.HoraAtencion.toString()).substr(-4, 2) + ":" + arr.HoraAtencion.toString().substr(-2);
+        let myJson = {
+            Id: arr.Id,
+            FechaAtencion: arr.FechaAtencion,
+            HoraAtencion: h,
+            MascotaId: arr.MascotaId,
+            MascotaNombre: arr.Mascota.Nombre,
+            Motivo: arr.Motivo
+        }
+        store.dispatch(reservasEnAtencion(myJson))
         store.dispatch(modoPantalla("video", "agenda"))
+    }
+    clickAtencion(e) {
+        let arr = e.currentTarget.item;
+        let h = ("0" + arr.Atencion.InicioAtencion.toString()).substr(-4, 2) + ":" + arr.Atencion.InicioAtencion.toString().substr(-2);
+        let myJson = {
+            Id: arr.Id,
+            FechaAtencion: arr.Atencion.InicioAtencion,
+            HoraAtencion: h,
+            MascotaId: arr.MascotaId,
+            MascotaNombre: arr.Mascota.Nombre,
+            Motivo: arr.Motivo,
+            Diagnostico: arr.Atencion.Diagnostico
+        }
+        store.dispatch(reservasEnAtencion(myJson))
+        store.dispatch(modoPantalla("diagnosticosdetalle", "agenda"))
     }
     clickMostrarDatos() {
         this.puestoSeleccionado = this.shadowRoot.querySelector("#selectPuesto").value
@@ -344,8 +379,9 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
     clickBucar() {
         let miToken = store.getState().cliente.datos.token
         let d = new Date()
-        let filtroFecha = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
-        store.dispatch(getReservasVeterinario(miToken, "FechaAtencion ge " + filtroFecha))
+        let filtroFecha = d.getUTCFullYear() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCDate()
+        //        store.dispatch(getReservasVeterinario(miToken, "FechaAtencion ge " + filtroFecha))
+        store.dispatch(getReservasVeterinario(miToken, "FechaAtencion ge 2020-01-01"))
     }
     static get properties() {
         return {

@@ -40,7 +40,6 @@ import {
     ATRAS
 } from "../../../assets/icons/icons";
 
-
 const MODO_PANTALLA = "ui.timeStampPantalla"
 const LOGIN_OK_ERROR = "cliente.logueadoTimeStamp"
 const COMMAND_ERROR = "autorizacion.commandErrorTimeStamp"
@@ -61,10 +60,12 @@ export class pantallaInicioSesion extends connect(store, MODO_PANTALLA, LOGIN_OK
             position: absolute;
             top: 0rem;
             left: 0rem;  
-            height:100%;
             background-color:var(--color-gris-fondo);
             display:grid;
             grid-template-rows:2fr 8fr;
+        }
+        :host(:not([media-size="small"])){
+            height: 100vh;
         }
         :host([hidden]){
             display: none; 
@@ -74,10 +75,7 @@ export class pantallaInicioSesion extends connect(store, MODO_PANTALLA, LOGIN_OK
             display:grid;
             grid-auto-flow:row;
             grid-gap:.8rem;
-            align-content:start;
-            overflow-y: auto; 
-            overflow-x: hidden; 
-        }
+       }
         #cuerpo::-webkit-scrollbar{
             display: none;
         }       
@@ -114,7 +112,7 @@ export class pantallaInicioSesion extends connect(store, MODO_PANTALLA, LOGIN_OK
 
             <mi-checkbox label="${idiomas[this.idioma].iniciosession.datos}"></mi-checkbox>
 
-            <button id="btn-siguiente" btn1 apagado @click=${this.clickBoton1}>
+            <button id="btn-siguiente" style="height:7vh" btn1 apagado @click=${this.clickBoton1}>
             ${idiomas[this.idioma].iniciosession.btn1}
             </button>
             <button id="btn-cuenta" btn2 @click=${this.clickBoton2}>
@@ -179,6 +177,7 @@ export class pantallaInicioSesion extends connect(store, MODO_PANTALLA, LOGIN_OK
     }
 
     stateChanged(state, name) {
+        this.style.height = window.innerHeight + "px"
         if (name == MODO_PANTALLA && state.ui.quePantalla == "iniciosesion") {
             store.dispatch(cancelarTimer())
         }
@@ -198,7 +197,6 @@ export class pantallaInicioSesion extends connect(store, MODO_PANTALLA, LOGIN_OK
 
     firstUpdated() {
         this.activar()
-
     }
 
     static get properties() {

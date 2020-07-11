@@ -34,6 +34,9 @@ import {
 import {
   middleware as reservas
 } from "./middleware/reservas";
+import {
+  middleware as atenciones
+} from "./middleware/atenciones";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -44,7 +47,8 @@ let mdw = [
   ...autorizacion,
   ...usuario,
   ...puestos,
-  ...reservas
+  ...reservas,
+  ...atenciones
 ]
 
 if (process.env.NODE_ENV !== 'production') {

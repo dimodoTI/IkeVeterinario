@@ -45,6 +45,7 @@ export const ikeVacuna = fetchFactory(webApiMascotas, "Vacunas")
 export const ikeConfiguracion = fetchFactory(webApiMascotas, "Configuracion")
 export const ikeTramo = fetchFactory(webApiMascotas, "Tramos")
 export const ikeReservas = fetchFactory(webApiMascotas, "Reservas")
+export const ikeAtenciones = fetchFactory(webApiMascotas, "Atenciones")
 
 export const ikeOdataMascotas = ODataEntity(mascotaOdata, "MascotasQuery")
 export const ikeMascotasTipo = fetchFactory(webApiMascotas, "MascotasTipo")
@@ -56,28 +57,4 @@ export const ikeOdataVacuna = ODataEntity(mascotaOdata, "VacunasQuery")
 export const ikeOdataConfiguracion = ODataEntity(mascotaOdata, "ConfiguracionQuery")
 export const ikeOdataTramo = ODataEntity(mascotaOdata, "TramosQuery")
 export const ikeReservasQuery = ODataEntity(mascotaOdata, "ReservasQuery")
-
-
-/* let app = "DigitalizacionExpedientes"
-let dominio = "http://localhost/" + app
-if (process.env.NODE_ENV == 'production') {
-  dominio = window.location.protocol + "//" + window.location.hostname + "/Intranet/" + app
-} */
-
-/* const DigitalizacionExpedientes = ODataFetchFactory({
-  fetch: fetch,
-  domain: dominio
-});
-
-export const expediente = ODataEntity(DigitalizacionExpedientes, "Traer")
-export const documentacion = ODataEntity(DigitalizacionExpedientes, "DocumentacionxExpte")
-export const documentos = ODataEntity(DigitalizacionExpedientes, "Documentacion")
-export const imagenHistorico = ODataEntity(DigitalizacionExpedientes, "ImagenHistorico")
-export const grabarImagen = ODataEntity(DigitalizacionExpedientes, "GrabarImagen")
-export const expedienteMarcar = ODataEntity(DigitalizacionExpedientes, "Marcar")
-export const estados = ODataEntity(DigitalizacionExpedientes, "DocumentacionxExpte_Estado")
-export const asignarImagen = ODataEntity(DigitalizacionExpedientes, "AsignarImagen")
-export const asignarImagenes = ODataEntity(DigitalizacionExpedientes, "AsignarImagenes")
-export const cerrar = ODataEntity(DigitalizacionExpedientes, "Cerrar")
-export const eventos = ODataEntity(DigitalizacionExpedientes, "EvetoEve_Imagenes")
-export const envio = ODataEntity(DigitalizacionExpedientes, "PasarDP") */
+export const ikeAtencionesQuery = ODataEntity(mascotaOdata, "AtencionesQuery")

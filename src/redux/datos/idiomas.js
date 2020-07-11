@@ -134,6 +134,24 @@ export const idiomas = {
             btnAdjuntar: "Adjuntar archivo",
             btnAceptar: "Enviar diagnóstico",
             btnCancelar: "Ahora no"
+        },
+        diagnosticos: {
+            titulo: "Enviá tu diagnóstico",
+            leyenda: "Escribí debajo las indicaciones y recomendaciones para tu paciente."
+        },
+        diagnosticosdetalle: {
+            titulo: "Detalle de consulta",
+            leyenda: "Acá vas a encontrar el expediente correspondiente a una consulta.",
+            lblDiagnostico: "Diagnóstico",
+            tituloconsulta: "Detalle de consulta",
+            expediente: "Reserva #",
+            paciente: "Paciente: ",
+            motivo: "Motivo: ",
+            fecha: "Fecha: ",
+            hora: "Hora: ",
+            veterinario: "Veterinario: ",
+
         }
     }
+
 }

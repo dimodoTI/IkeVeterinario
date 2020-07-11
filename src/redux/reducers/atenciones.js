@@ -1,7 +1,5 @@
 import {
     GET_SUCCESS,
-    GET_VETERINARIO_SUCCESS,
-    EN_ATENCION,
     GET_ERROR,
     PATCH_SUCCESS,
     PATCH_ERROR,
@@ -12,16 +10,12 @@ import {
     REMOVE_SUCCESS,
     REMOVE_ERROR,
     EDIT
-} from "../actions/reservas";
+} from "../actions/atenciones";
 
 
 const initialState = {
     entities: null,
-    entitiesVeterinario: null,
-    entitiesEnAtencion: null,
     timeStamp: null,
-    timeStampVeterinario: null,
-    timeStampEnAtencion: null,
     removeTimeStamp: null,
     updateTimeStamp: null,
     addTimeStamp: null,
@@ -39,14 +33,6 @@ export const reducer = (state = initialState, action) => {
         case GET_SUCCESS:
             newState.entities = action.payload.receive
             newState.timeStamp = (new Date()).getTime();
-            break;
-        case GET_VETERINARIO_SUCCESS:
-            newState.entitiesVeterinario = action.payload.receive
-            newState.timeStampVeterinario = (new Date()).getTime();
-            break;
-        case EN_ATENCION:
-            newState.entitiesEnAtencion = action.registro
-            newState.timeStampEnAtencion = (new Date()).getTime();
             break;
         case EDIT:
             newState.editTimeStamp = (new Date()).getTime();

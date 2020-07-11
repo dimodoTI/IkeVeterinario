@@ -22,7 +22,7 @@ import {
 import { mediaConMenu01 } from "../css/mediaConMenu01"
 
 import {
-    VIDEO, REFRESH
+    ATRAS
 } from "../../../assets/icons/icons"
 
 import {
@@ -47,16 +47,8 @@ const RESERVAS_ERROROTROSTIMESTAMP = "reservas.commandErrorTimeStamp"
 export class pantallaDiagnosticos extends connect(store, PUESTO_TIMESTAMP, MODO_PANTALLA, RESERVAS_TIMESTAMP, RESERVAS_UPDATETIMESTAMP, RESERVAS_ADDTIMESTAMP, RESERVAS_ERRORGETTIMESTAMP, RESERVAS_ERROROTROSTIMESTAMP)(LitElement) {
     constructor() {
         super();
-
         this.idioma = "ES"
-        this.titulo = idiomas[this.idioma].misconsultas.titulo
-        this.leyenda = idiomas[this.idioma].misconsultas.leyenda
-        this.puestoSeleccionado = -1
-        this.puestos = null
         this.reservas = null
-        this.reservasJson = { token: "", filter: "", expand: "Mascota($select = Nombre), Tramo", orderby: "FechaAtencion,HoraAtencion" }
-        //this.reservasJson = { token: "", expand: "Mascota($select = Nombre), Tramo", orderby: "FechaAtencion,HoraAtencion" }
-
     }
 
     static get styles() {
@@ -67,7 +59,6 @@ export class pantallaDiagnosticos extends connect(store, PUESTO_TIMESTAMP, MODO_
         :host{
             display: grid;
             background-color:var(--color-gris-fondo);
-            height: 100vh;
             width: 100%;   
             padding:0;
             margin:0;
@@ -113,9 +104,10 @@ export class pantallaDiagnosticos extends connect(store, PUESTO_TIMESTAMP, MODO_
             <div id="gridContenedor">
                 <div id="header">
                     <div id="bar">
-                        <div id="lblTitulo">${idiomas[this.idioma].agenda.titulo}</div>
+                        <div @click=${this.clickAtras}>${ATRAS}</div>
+                        <div id="lblTitulo">${idiomas[this.idioma].diagnosticos.titulo}</div>
                     </div>
-                    <div id="lblLeyenda">${idiomas[this.idioma].agenda.leyenda}</div>
+                    <div id="lblLeyenda">${idiomas[this.idioma].diagnosticos.leyenda}</div>
                 </div>       
                 <div id="cuerpo">
                     <diagnostico-componente id="control">
@@ -127,6 +119,7 @@ export class pantallaDiagnosticos extends connect(store, PUESTO_TIMESTAMP, MODO_
         `
     }
     stateChanged(state, name) {
+        this.style.height = window.innerHeight + "px"
         if (name == MODO_PANTALLA && state.ui.quePantalla == "diagnosticos") {
             // let miToken = store.getState().cliente.datos.token
             // this.reservasJson.token = miToken
@@ -144,20 +137,12 @@ export class pantallaDiagnosticos extends connect(store, PUESTO_TIMESTAMP, MODO_
         if (name == RESERVAS_TIMESTAMP && state.ui.quePantalla == "diagnosticos") {
             if (state.reservas.entities) {
                 this.reservas = state.reservas.entities
-                if (this.puestos) {
-                    this.update()
-                }
+                this.update()
             }
         }
-        if (name == PUESTO_TIMESTAMP && state.ui.quePantalla == "diagnosticos") {
-            if (state.puestos.entities) {
-                this.puestos = state.puestos.entities
-                if (this.puestoSeleccionado == -1) { this.puestoSeleccionado = this.puestos[0].Id }
-                if (this.reservas) {
-                    this.update()
-                }
-            }
-        }
+    }
+    clickAtras() {
+        store.dispatch(modoPantalla("misconsultas"))
     }
     static get properties() {
         return {

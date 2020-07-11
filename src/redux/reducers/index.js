@@ -19,6 +19,9 @@ import {
 import {
   reducer as reservasReducer
 } from "./reservas"
+import {
+  reducer as atencionesReducer
+} from "./atenciones"
 
 export const rootReducer = (state = {}, action) => {
 
@@ -28,7 +31,8 @@ export const rootReducer = (state = {}, action) => {
     cliente: clienteReducer(state.cliente, action),
     usuario: usuarioReducer(state.usuario, action),
     puestos: puestosReducer(state.puestos, action),
-    reservas: reservasReducer(state.reservas, action)
+    reservas: reservasReducer(state.reservas, action),
+    atenciones: atencionesReducer(state.atenciones, action)
 
   };
 };

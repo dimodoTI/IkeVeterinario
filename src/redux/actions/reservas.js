@@ -5,6 +5,7 @@ export const PATCH = "[reservas] PATCH";
 export const UPDATE = "[reservas] UPDATE";
 export const REMOVE = "[reservas] REMOVE";
 export const EDIT = "[reservas] EDIT"
+export const EN_ATENCION = "[reservas] EN_ATENCION"
 
 
 export const GET_SUCCESS = "[reservas] GET success";
@@ -30,7 +31,12 @@ export const get = (options) => ({
 
 export const getVeterinario = (token, filter) => ({
     type: GET_VETERINARIO,
-    options: { token: token, filter: filter, expand: "Mascota($select = Nombre), Tramo", orderby: "FechaAtencion,HoraAtencion" }
+    options: { token: token, filter: filter, expand: "Mascota($select = Nombre), Tramo, Atencion", orderby: "FechaAtencion,HoraAtencion" }
+});
+
+export const enAtencion = (registro) => ({
+    type: EN_ATENCION,
+    registro: registro
 });
 
 export const add = (body, token) => ({
@@ -73,4 +79,5 @@ export const edit = (modo, item) => ({
         Activo: 1
     },
     modo: modo,
-})
+});
+

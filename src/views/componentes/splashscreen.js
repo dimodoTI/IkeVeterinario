@@ -43,7 +43,7 @@ export class splashScreen extends connect(store)(LitElement) {
         `
     }
     render() {
-        return html `
+        return html`
         <div id="cuerpo">
         </div>
         `

@@ -65,20 +65,17 @@ export class pantallaMisconsultas extends connect(store, MODO_PANTALLA)(LitEleme
         ${proxima}
         ${mediaConMenu01}
         :host{
-            position: absolute;
-            top: 0;
-            left: 0;  
+            position: relative;
             display: grid;
             background-color:var(--color-gris-fondo);
-            height: 100vh;
             width: 100%;   
-            grid-template-rows:90% 10%;
+            grid-template-rows:9fr 1fr;
         }
         :host([hidden]){
             display: none; 
         }
         :host(:not([media-size="small"])){
-            grid-template-rows:100%;
+            grid-template-rows:1fr;
         }
         :host(:not([media-size="small"])) #gridContenedor{
             align-content:flex-start;
@@ -227,6 +224,7 @@ export class pantallaMisconsultas extends connect(store, MODO_PANTALLA)(LitEleme
     }
 
     stateChanged(state, name) {
+        this.style.height = window.innerHeight + "px"
         if (name == MODO_PANTALLA && state.ui.quePantalla == "misconsultas") {
             store.dispatch(cancelarTimer())
         }

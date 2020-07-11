@@ -30,8 +30,9 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
         :host{
             display: grid;
             background-color: trasparent;
-            height: 100vh;
             width: 100%;   
+            overflow-x:none;
+            overflow-y:auto;
         }
         :host([hidden]){
             display: none; 
@@ -39,6 +40,8 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
         #gridContenedor{
             display:grid;
             grid-template-rows: 18% 82%;                 
+            overflow-x:none;
+            overflow-y:auto;
         }
         :host([media-size="small"]) #gridContenedor{
             grid-row-start:1;
@@ -52,7 +55,7 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
             background-size: 1rem 1rem;
         }
         #cuerpo{
-            height: 100%;
+            height: auto;
             width: 100%;
             display: grid;
             background-color:transparent;            
@@ -60,8 +63,8 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
-            grid-template-rows:70% 15% 15%;
-            align-items: center;
+            grid-template-rows:50% 15% 55%;
+            /* align-items: center; */
             justify-items: center;
         }
         #cuerpo[llamando]{
@@ -72,13 +75,14 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
         }
         #llamando{
             width:8rem;
+            text-align:center;
+            align-self:center;
             color: var(--color-blanco);
             background-color: var(--color-gris-oscuro);
             opacity:.8;
             border-radius:1rem;
-            text-align:center;
             font-size: var(--font-titulo-h1-size);
-            font-weight: var(--font-titulo-h1-weight);
+            font-weight: var(--font-titulo-h1-weight);        
         }
         #cortar{
             display:grid;
@@ -125,7 +129,6 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
             display:none;
         }
         .parpadea {
-  
             animation-name: parpadeo;
             animation-duration: 2s;
             animation-timing-function: linear;
@@ -167,7 +170,9 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
                 <div id="lblLeyenda">${idiomas[this.idioma].video.leyenda}</div>
             </div>
             <div id="cuerpo"  llamando @click="${this.pasar}">
-                <div id="llamando" class="parpadea">${idiomas[this.idioma].video.conectando}</div>
+                <div id="llamando" class="parpadea">
+                    ${idiomas[this.idioma].video.conectando}
+                </div>
                 <div id="micvid">
                     <div id="microfono" style="display:grid" @click="${this.microfonoMostrar}">${MICROFONO}</div>
                     <div id="microfono" style="display:none" @click="${this.microfonoMostrar}">${MICROFONONO}</div>
@@ -189,6 +194,7 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
         }
     }
     stateChanged(state, name) {
+        this.style.height = window.innerHeight + "px"
         if (name == MODO_PANTALLA && state.ui.quePantalla == "video") {
             if (this.shadowRoot.querySelector("#cuerpo")) {
                 this.shadowRoot.querySelector("#cuerpo").removeAttribute("hablando");

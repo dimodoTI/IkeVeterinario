@@ -51,6 +51,7 @@ import {
 import { pantallaBienvenidos } from "../views/formularios/bienvenidos"
 import { pantallaVideo } from "../views/formularios/video"
 import { pantallaDiagnosticos } from "../views/formularios/diagnosticos"
+import { pantallaDiagnosticosDetalles } from "../views/formularios/diagnosticoDetalles"
 
 const MEDIA_CHANGE = "ui.media.timeStamp"
 const QUEPANTALLA = "ui.timeStampPantalla";
@@ -65,10 +66,10 @@ export class viewManager extends connect(store, MEDIA_CHANGE, QUEPANTALLA)(LitEl
         :host{
             display: grid;                 
             grid-gap:1rem;
-             height:100vh;
+            height:100vh;
             width: 100vw;
             padding:0;
-            background-color:var(--color-gris-claro);
+            background-color:var(--color-blanco);
         }
         #splash{
             align-self: top;
@@ -93,6 +94,7 @@ export class viewManager extends connect(store, MEDIA_CHANGE, QUEPANTALLA)(LitEl
         <pantalla-agenda id="agenda" media-size="${this.mediaSize}"></pantalla-agenda>
         <pantalla-video id="video" media-size="${this.mediaSize}"></pantalla-video>
         <pantalla-diagnosticos id="diagnosticos" media-size="${this.mediaSize}"></pantalla-diagnosticos>
+        <pantalla-diagnosticosdetalles id="diagnosticosdetalle" media-size="${this.mediaSize}"></pantalla-diagnosticosdetalles>
         `;
     }
 
@@ -114,6 +116,7 @@ export class viewManager extends connect(store, MEDIA_CHANGE, QUEPANTALLA)(LitEl
                 this.shadowRoot.querySelector("#agenda").hidden = state.ui.quePantalla != "agenda";
                 this.shadowRoot.querySelector("#video").hidden = state.ui.quePantalla != "video";
                 this.shadowRoot.querySelector("#diagnosticos").hidden = state.ui.quePantalla != "diagnosticos";
+                this.shadowRoot.querySelector("#diagnosticosdetalle").hidden = state.ui.quePantalla != "diagnosticosdetalle";
             }
         }
 
