@@ -133,7 +133,7 @@ export class diagnosticoComponente extends connect(store, ATENCIONES_TIMESTAMP, 
     }
     stateChanged(state, name) {
         if (name == ATENCIONES_ADDTIMESTAMP && state.ui.quePantalla == "diagnosticos") {
-            store.dispatch(modoPantalla("diagnosticosdetalle"))
+            store.dispatch(modoPantalla("diagnosticosdetalle", "agenda"))
         }
     }
     clickAceptar() {
@@ -144,7 +144,7 @@ export class diagnosticoComponente extends connect(store, ATENCIONES_TIMESTAMP, 
         let addAte = {
             ReservaId: res.Id,
             VeterinarioId: store.getState().cliente.datos.id,
-            InicioAtencion: d,
+            InicioAtencion: res.FechaAtencion,
             FinAtencion: d,
             Diagnostico: this.shadowRoot.querySelector("#txtDiagnostico").value,
             Observaciones: "",
@@ -153,8 +153,8 @@ export class diagnosticoComponente extends connect(store, ATENCIONES_TIMESTAMP, 
             ComentarioCalificacion: "",
             Activo: true
         }
-        let h1 = ("0" + h.toString()).substr(-4, 2) + ":" + h.toString().substr(-2);
-        res.HoraAtencion = h1
+        // let h1 = ("0" + h.toString()).substr(-4, 2) + ":" + h.toString().substr(-2);
+        // res.HoraAtencion = h1
         res.Diagnostico = addAte.Diagnostico
         store.dispatch(addAtenciones(addAte, miToken))
         this.shadowRoot.querySelector("#txtDiagnostico").value = ""

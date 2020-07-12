@@ -197,7 +197,7 @@ export class pieComponente extends connect(store)(LitElement) {
         store.dispatch(modoPantalla("agenda"))
     }
     clickBoton3() {
-        store.dispatch(modoPantalla("historial"))
+        store.dispatch(modoPantalla("atencionmascotas"))
     }
 
     static get properties() {

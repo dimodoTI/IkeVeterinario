@@ -1,8 +1,10 @@
 import {
     GET,
     GET_VETERINARIO,
+    GET_ATENCIONDEUNAMASCOTA,
     GET_SUCCESS,
     GET_VETERINARIO_SUCCESS,
+    GET_ATENCIONDEUNAMASCOTA_SUCCESS,
     GET_ERROR,
     ADD,
     ADD_SUCCESS,
@@ -45,6 +47,9 @@ export const get = ({
     }
     if (action.type === GET_VETERINARIO) {
         dispatch(apiRequest(ikeReservasQuery, action.options, GET_VETERINARIO_SUCCESS, GET_ERROR))
+    }
+    if (action.type === GET_ATENCIONDEUNAMASCOTA) {
+        dispatch(apiRequest(ikeReservasQuery, action.options, GET_ATENCIONDEUNAMASCOTA_SUCCESS, GET_ERROR))
     }
 };
 

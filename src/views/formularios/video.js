@@ -190,7 +190,7 @@ export class pantallaVideo extends connect(store, MODO_PANTALLA)(LitElement) {
         if (this.shadowRoot.querySelector("#cuerpo").hasAttribute("llamando")) {
             store.dispatch(modoPantalla("agenda"))
         } else {
-            store.dispatch(modoPantalla("diagnosticos"))
+            store.dispatch(modoPantalla("diagnosticos", "agenda"))
         }
     }
     stateChanged(state, name) {

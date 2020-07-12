@@ -151,6 +151,17 @@ export const idiomas = {
             hora: "Hora: ",
             veterinario: "Veterinario: ",
 
+        },
+        atencionmascotas: {
+            titulo: "Historial de atenciones",
+            leyenda: "Selecciona la reserva.",
+            tituloLista: "Consultas del día"
+        },
+        atencionesdeunamascota: {
+            titulo: "Historial de atenciones",
+            leyenda: "De la mascota.",
+            titulo2: "titulo2",
+            verDetalle: "Ver detalle"
         }
     }
 

@@ -180,25 +180,25 @@ export class pantallaDiagnosticosDetalles extends connect(store, PUESTO_TIMESTAM
                         <label id="lblExpediente">${idiomas[this.idioma].diagnosticosdetalle.expediente + " " + this.reservaEnAtencion.Id}</label>
                         <label id="lblPaciente">${idiomas[this.idioma].diagnosticosdetalle.paciente + " " + this.reservaEnAtencion.MascotaNombre}</label>           
                         <label id="lblMotivo">${idiomas[this.idioma].diagnosticosdetalle.motivo + " " + this.reservaEnAtencion.Motivo}</label>           
-                        <label id="lblFecha">${idiomas[this.idioma].diagnosticosdetalle.fecha + " " + this.verFecha(this.reservaEnAtencion.FechaAtencion)}</label>           
-                        <label id="lblHora">${idiomas[this.idioma].diagnosticosdetalle.hora + " " + this.reservaEnAtencion.HoraAtencion}</label>           
-                        <label id="lblVeterinario">${idiomas[this.idioma].diagnosticosdetalle.veterinario + " " + this.verVeterinario()}</label>           
-                        <div style="padding-top:.5rem;display:grid;grid-gap:.5rem">
-                        ${this.archivo.map(dato => html`
+                        <label id="lblFecha">${idiomas[this.idioma].diagnosticosdetalle.fecha + " " + this.verFecha()}</label>           
+                        <label id="lblHora">${idiomas[this.idioma].diagnosticosdetalle.hora + " " + this.verHora()}</label>
+        <label id="lblVeterinario">${idiomas[this.idioma].diagnosticosdetalle.veterinario + " " + this.verVeterinario()}</label>
+        <div style="padding-top:.5rem;display:grid;grid-gap:.5rem">
+            ${this.archivo.map(dato => html`
                             <div id="ciDivEtiqueta">
                                 <div id="ciDivContenido" style="grid-column-start:1;grid-column-end:3">
                                     <div id="ciDivIcomo">${ARCHIVO}</div>
                                     <div id="ciDivNombre">${dato.nombre}</div>
                                 </div>
                             </div>
-                        `)}   
-                    </div>
-                </div>
-                </div>
-            </div>
-            <pie-componente  id="footer" opcion="cero" media-size="${this.mediaSize}"></pie-componente>
+                        `)}
+        </div>
+                </div >
+                </div >
+            </div >
+    <pie-componente id="footer" opcion="cero" media-size="${this.mediaSize}"></pie-componente>
 
-        `
+`
     }
     stateChanged(state, name) {
         this.style.height = window.innerHeight + "px"
@@ -229,15 +229,18 @@ export class pantallaDiagnosticosDetalles extends connect(store, PUESTO_TIMESTAM
         //     }
         // }
     }
-    verFecha(fecha) {
-        let d = new Date(fecha)
-        return d.getUTCFullYear() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCDate()
+    verFecha() {
+        let d = new Date(this.reservaEnAtencion.FechaAtencion)
+        return d.getUTCDate() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCFullYear()
+    }
+    verHora() {
+        return this.reservaEnAtencion.HoraAtencion
     }
     verVeterinario() {
         return store.getState().cliente.datos.apellido + ", " + store.getState().cliente.datos.nombre
     }
     clickAtras() {
-        store.dispatch(modoPantalla("misconsultas"))
+        store.dispatch(modoPantalla(store.getState().ui.pantallaQueLLamo))
     }
     static get properties() {
         return {

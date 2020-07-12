@@ -52,6 +52,8 @@ import { pantallaBienvenidos } from "../views/formularios/bienvenidos"
 import { pantallaVideo } from "../views/formularios/video"
 import { pantallaDiagnosticos } from "../views/formularios/diagnosticos"
 import { pantallaDiagnosticosDetalles } from "../views/formularios/diagnosticoDetalles"
+import { pantallaAtencionMascotas } from "../views/formularios/atencionMascotas"
+import { pantallaAtencionesDeUnaMascota } from "../views/formularios/atencionesDeUnaMascota"
 
 const MEDIA_CHANGE = "ui.media.timeStamp"
 const QUEPANTALLA = "ui.timeStampPantalla";
@@ -95,6 +97,8 @@ export class viewManager extends connect(store, MEDIA_CHANGE, QUEPANTALLA)(LitEl
         <pantalla-video id="video" media-size="${this.mediaSize}"></pantalla-video>
         <pantalla-diagnosticos id="diagnosticos" media-size="${this.mediaSize}"></pantalla-diagnosticos>
         <pantalla-diagnosticosdetalles id="diagnosticosdetalle" media-size="${this.mediaSize}"></pantalla-diagnosticosdetalles>
+        <pantalla-atencionmascotas id="atencionmascotas" media-size="${this.mediaSize}"></pantalla-atencionmascotas>
+        <pantalla-atencionesdeunamascota id="atencionesdeunamascota" media-size="${this.mediaSize}"></pantalla-atencionesdeunamascota>
         `;
     }
 
@@ -117,6 +121,8 @@ export class viewManager extends connect(store, MEDIA_CHANGE, QUEPANTALLA)(LitEl
                 this.shadowRoot.querySelector("#video").hidden = state.ui.quePantalla != "video";
                 this.shadowRoot.querySelector("#diagnosticos").hidden = state.ui.quePantalla != "diagnosticos";
                 this.shadowRoot.querySelector("#diagnosticosdetalle").hidden = state.ui.quePantalla != "diagnosticosdetalle";
+                this.shadowRoot.querySelector("#atencionmascotas").hidden = state.ui.quePantalla != "atencionmascotas";
+                this.shadowRoot.querySelector("#atencionesdeunamascota").hidden = state.ui.quePantalla != "atencionesdeunamascota";
             }
         }
 

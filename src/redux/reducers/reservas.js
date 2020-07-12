@@ -1,6 +1,7 @@
 import {
     GET_SUCCESS,
     GET_VETERINARIO_SUCCESS,
+    GET_ATENCIONDEUNAMASCOTA_SUCCESS,
     EN_ATENCION,
     GET_ERROR,
     PATCH_SUCCESS,
@@ -18,6 +19,7 @@ import {
 const initialState = {
     entities: null,
     entitiesVeterinario: null,
+    entitiesAtencionDeUnaMascota: null,
     entitiesEnAtencion: null,
     timeStamp: null,
     timeStampVeterinario: null,
@@ -43,6 +45,10 @@ export const reducer = (state = initialState, action) => {
         case GET_VETERINARIO_SUCCESS:
             newState.entitiesVeterinario = action.payload.receive
             newState.timeStampVeterinario = (new Date()).getTime();
+            break;
+        case GET_ATENCIONDEUNAMASCOTA_SUCCESS:
+            newState.entitiesAtencionDeUnaMascota = action.payload.receive
+            newState.timeStampAtencionDeUnaMascota = (new Date()).getTime();
             break;
         case EN_ATENCION:
             newState.entitiesEnAtencion = action.registro

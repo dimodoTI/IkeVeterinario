@@ -33,8 +33,12 @@ import {
     pieComponente
 } from "../componentes/pie"
 
+import {
+    proxima
+} from "../css/proxima"
+
 import { get as getPuesto } from "../../redux/actions/puestos";
-import { get as getReservas, enAtencion as reservasEnAtencion, getVeterinario as getReservasVeterinario, patch as patchReservas, add as addReservas } from "../../redux/actions/reservas";
+import { get as getReservas, enAtencion as reservasEnAtencion, getVeterinario as getReservasVeterinario, getAtencionDeUnaMascota as getReservasAtencionDeUnaMascota, patch as patchReservas, add as addReservas } from "../../redux/actions/reservas";
 
 const PUESTO_TIMESTAMP = "puesto.timeStamp"
 const MODO_PANTALLA = "ui.timeStampPantalla"
@@ -45,19 +49,22 @@ const RESERVAS_ADDTIMESTAMP = "reservas.addTimeStamp"
 const RESERVAS_ERRORGETTIMESTAMP = "reservas.errorTimeStamp"
 const RESERVAS_ERROROTROSTIMESTAMP = "reservas.commandErrorTimeStamp"
 
-export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTALLA, RESERVAS_TIMESTAMP, RESERVASVETERINARIO_TIMESTAMP, RESERVAS_UPDATETIMESTAMP, RESERVAS_ADDTIMESTAMP, RESERVAS_ERRORGETTIMESTAMP, RESERVAS_ERROROTROSTIMESTAMP)(LitElement) {
+export class pantallaAtencionMascotas extends connect(store, PUESTO_TIMESTAMP, MODO_PANTALLA, RESERVAS_TIMESTAMP, RESERVASVETERINARIO_TIMESTAMP, RESERVAS_UPDATETIMESTAMP, RESERVAS_ADDTIMESTAMP, RESERVAS_ERRORGETTIMESTAMP, RESERVAS_ERROROTROSTIMESTAMP)(LitElement) {
     constructor() {
         super();
-        this.hidden = true
+
         this.idioma = "ES"
+        this.titulo = idiomas[this.idioma].misconsultas.titulo
+        this.leyenda = idiomas[this.idioma].misconsultas.leyenda
         this.puestoSeleccionado = -1
-        this.puestos = []
-        this.reservas = []
+        this.puestos = null
+        this.reservas = null
     }
 
     static get styles() {
         return css`
         ${cabecera1}
+        ${proxima}
         ${mediaConMenu01}
 
         :host{
@@ -67,6 +74,7 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
             padding:0;
             margin:0;
             grid-template-rows: 90% 10%;
+            /* grid-template-rows: 19% 60% 12%; */
         }
 
         :host([hidden]){
@@ -77,9 +85,10 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
             height:100vh;
         }
         #gridContenedor{
-            position:relative;
-            display:grid;
             grid-template-rows:18% 82%;           
+        }
+        .proxima{
+            height:3vh;
         }
         #cuerpo{           
             display:grid;
@@ -199,15 +208,11 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
             display:grid;
             grid-template-columns: 80% 20%;
         }
-        #divImgVideo, #divImgAtencion{
+        #divImgAtencion{
             align-self:center;
             justify-self:center;
             cursor:pointer;
             z-index:10;
-        }
-        #divImgVideo svg{
-            height:1.5rem;
-            width: 1.5rem;
         }
         #divImgAtencion svg{
             height:1.5rem;
@@ -221,9 +226,9 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
             <div id="gridContenedor">
                 <div id="header">
                     <div id="bar">
-                        <div id="lblTitulo">${idiomas[this.idioma].agenda.titulo}</div>
+                        <div id="lblTitulo">${idiomas[this.idioma].atencionmascotas.titulo}</div>
                     </div>
-                    <div id="lblLeyenda">${idiomas[this.idioma].agenda.leyenda}</div>
+                    <div id="lblLeyenda">${idiomas[this.idioma].atencionmascotas.leyenda}</div>
                 </div>       
 
                 <div id="cuerpo">
@@ -242,7 +247,7 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
                     </div>
                     <div class="contenedorLista">
                         <div class="tituloLista">
-                            ${idiomas[this.idioma].agenda.tituloLista}
+                            ${idiomas[this.idioma].atencionmascotas.tituloLista}
                         </div>
                         <div class="grillaLista">
                             ${!this.reservas ? "" : this.reservas.filter(item => { return item.Tramo.PuestoId == this.puestoSeleccionado }).map((item) => {
@@ -257,8 +262,7 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
                                         <div class="agenda">
                                             <div id="divVideo">
                                                 <div style="align-self: center;">${this.queHora(item.HoraAtencion) + " hs"}</div>
-                                                <div id="divImgVideo" style="display:${item.Atencion ? 'none' : 'grid'}" .item=${item}  @click="${this.clickVideo}">${VIDEO}</div>
-                                                <div id="divImgAtencion" style="display:${item.Atencion ? 'grid' : 'none'}" .item=${item}  @click="${this.clickAtencion}">${ARCHIVO}</div>
+                                                <div id="divImgAtencion" .item=${item}  @click="${this.clickAtencion}">${ARCHIVO}</div>
                                             </div>
                                             <div class="paciente">
                                                 <div style="padding-right:.7rem">${item.Mascota.Nombre}</div>
@@ -270,7 +274,7 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
                     </div>
                 </div>
             </div>
-            <pie-componente  id="footer" opcion="dos" media-size="${this.mediaSize}"></pie-componente>
+            <pie-componente  id="footer" opcion="tres" media-size="${this.mediaSize}"></pie-componente>
 
         `
     }
@@ -301,7 +305,7 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
     }
     stateChanged(state, name) {
         this.style.height = window.innerHeight + "px"
-        if (name == MODO_PANTALLA && state.ui.quePantalla == "agenda") {
+        if (name == MODO_PANTALLA && state.ui.quePantalla == "atencionmascotas") {
             let miToken = store.getState().cliente.datos.token
             let d = new Date()
             let filtroFecha = d.getUTCFullYear() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCDate()
@@ -314,7 +318,7 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
                 store.dispatch(getPuesto({}))
             }
         }
-        if (name == RESERVASVETERINARIO_TIMESTAMP && state.ui.quePantalla == "agenda") {
+        if (name == RESERVASVETERINARIO_TIMESTAMP && state.ui.quePantalla == "atencionmascotas") {
             if (state.reservas.entitiesVeterinario) {
                 this.reservas = state.reservas.entitiesVeterinario
                 if (this.puestos) {
@@ -322,7 +326,7 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
                 }
             }
         }
-        if (name == PUESTO_TIMESTAMP && state.ui.quePantalla == "agenda") {
+        if (name == PUESTO_TIMESTAMP && state.ui.quePantalla == "atencionmascotas") {
             if (state.puestos.entities) {
                 this.puestos = state.puestos.entities
                 if (this.puestoSeleccionado == -1) { this.puestoSeleccionado = this.puestos[0].Id }
@@ -332,36 +336,14 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
             }
         }
     }
-    clickVideo(e) {
-        let arr = e.currentTarget.item;
-        //let d = new Date()
-        //let fecha = d.getUTCFullYear() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCDate()
-        //let h = d.getUTCHours.toString() + ":" + d.getMinutes().toString();
-        let myJson = {
-            Id: arr.Id,
-            FechaAtencion: arr.FechaAtencion,
-            HoraAtencion: ("0" + arr.HoraAtencion).toString().substr(-4, 2) + ":" + arr.HoraAtencion.toString().substr(-2),
-            MascotaId: arr.MascotaId,
-            MascotaNombre: arr.Mascota.Nombre,
-            Motivo: arr.Motivo
-        }
-        store.dispatch(reservasEnAtencion(myJson))
-        store.dispatch(modoPantalla("video", "agenda"))
-    }
     clickAtencion(e) {
         let arr = e.currentTarget.item;
-        let h = ("0" + arr.Atencion.InicioAtencion).toString().substr(-4, 2) + ":" + arr.Atencion.InicioAtencion.toString().substr(-2);
-        let myJson = {
-            Id: arr.Id,
-            FechaAtencion: arr.FechaAtencion,
-            HoraAtencion: ("0" + arr.HoraAtencion).toString().substr(-4, 2) + ":" + arr.HoraAtencion.toString().substr(-2),
-            MascotaId: arr.MascotaId,
-            MascotaNombre: arr.Mascota.Nombre,
-            Motivo: arr.Motivo,
-            Diagnostico: arr.Atencion.Diagnostico
-        }
-        store.dispatch(reservasEnAtencion(myJson))
-        store.dispatch(modoPantalla("diagnosticosdetalle", "agenda"))
+        let miToken = store.getState().cliente.datos.token
+        let d = new Date()
+        //let filtroFecha = "FechaAtencion ge " + d.getUTCFullYear() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCDate() + " AND MascotaId eq " + arr.MascotaId
+        let filtroFecha = "MascotaId eq " + arr.MascotaId
+        store.dispatch(getReservasAtencionDeUnaMascota(miToken, filtroFecha))
+        store.dispatch(modoPantalla("atencionesdeunamascota", "atencionmascotas"))
     }
     clickMostrarDatos() {
         this.puestoSeleccionado = this.shadowRoot.querySelector("#selectPuesto").value
@@ -389,4 +371,4 @@ export class pantallaAgenda extends connect(store, PUESTO_TIMESTAMP, MODO_PANTAL
     }
 
 }
-window.customElements.define("pantalla-agenda", pantallaAgenda);
+window.customElements.define("pantalla-atencionmascotas", pantallaAtencionMascotas);

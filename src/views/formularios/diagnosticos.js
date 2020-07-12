@@ -81,6 +81,8 @@ export class pantallaDiagnosticos extends connect(store, PUESTO_TIMESTAMP, MODO_
             display:grid;
             position:relative;
             border: 1px solid red;
+            overflow-y: auto; 
+            overflow-x: none; 
         }
         #footer{
             grid-area: Pie; 
