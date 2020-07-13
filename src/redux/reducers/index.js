@@ -22,10 +22,14 @@ import {
 import {
   reducer as atencionesReducer
 } from "./atenciones"
+import {
+  reducer as apiReducer
+} from "./api"
 
 export const rootReducer = (state = {}, action) => {
 
   return {
+    api: apiReducer(state.api, action),
     ui: uiReducer(state.ui, action),
     autorizacion: autorizacionReducer(state.autorizacion, action),
     cliente: clienteReducer(state.cliente, action),

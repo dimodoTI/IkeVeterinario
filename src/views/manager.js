@@ -47,6 +47,9 @@ import {
 import {
     pantallaAgenda
 } from "../views/formularios/agenda"
+import {
+    dimodoSpinner
+} from "../views/componentes/spinner"
 
 import { pantallaBienvenidos } from "../views/formularios/bienvenidos"
 import { pantallaVideo } from "../views/formularios/video"
@@ -99,6 +102,8 @@ export class viewManager extends connect(store, MEDIA_CHANGE, QUEPANTALLA)(LitEl
         <pantalla-diagnosticosdetalles id="diagnosticosdetalle" media-size="${this.mediaSize}"></pantalla-diagnosticosdetalles>
         <pantalla-atencionmascotas id="atencionmascotas" media-size="${this.mediaSize}"></pantalla-atencionmascotas>
         <pantalla-atencionesdeunamascota id="atencionesdeunamascota" media-size="${this.mediaSize}"></pantalla-atencionesdeunamascota>
+
+        <dimodo-spinner type="spinner2"></dimodo-spinner>
         `;
     }
 

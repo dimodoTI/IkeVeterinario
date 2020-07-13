@@ -57,9 +57,7 @@ export class pantallaInicioSesion extends connect(store, MODO_PANTALLA, LOGIN_OK
         ${cabecera1}
         ${media01}
         :host{ 
-            position: absolute;
-            top: 0rem;
-            left: 0rem;  
+            position: relative;
             background-color:var(--color-gris-fondo);
             display:grid;
             grid-template-rows:2fr 8fr;
